@@ -3,6 +3,7 @@ package me.jameslloyd.sleepyenchants;
 import me.jameslloyd.sleepyenchants.commands.GiveEnchanted;
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.events.PlayerInteract;
+import me.jameslloyd.sleepyenchants.events.PlayerToggleSneak;
 import me.jameslloyd.sleepyenchants.events.Quit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -26,6 +27,7 @@ public final class SleepyEnchants extends JavaPlugin {
 
         pluginManager.registerEvents(new PlayerInteract(), this);
         pluginManager.registerEvents(new Quit(), this);
+        pluginManager.registerEvents(new PlayerToggleSneak(), this);
 
         log("&a[SleepyEnchants] has started up successfully!");
     }

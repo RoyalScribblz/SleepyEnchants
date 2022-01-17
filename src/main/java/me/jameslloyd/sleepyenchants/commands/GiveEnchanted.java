@@ -31,7 +31,11 @@ public class GiveEnchanted implements CommandExecutor {
         }
 
         if (enchantName.toLowerCase().equals("bladebeam")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.BLADEBEAM, ChatColor.AQUA, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.BLADEBEAM, ChatColor.LIGHT_PURPLE, level);
+        }
+
+        if (enchantName.toLowerCase().equals("spinattack")) {
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level);
         }
 
         return true;
