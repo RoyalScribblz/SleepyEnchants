@@ -96,6 +96,7 @@ public class PlayerInteract implements Listener {
                         if (entity instanceof LivingEntity && !hitEntities.contains(entity)) {
                             if (!entity.equals(player)) {
                                 ((LivingEntity) entity).damage(2 * (3 + (itemInHand.getEnchantmentLevel(CustomEnchants.BLADEBEAM) - 1) * 1.5));
+                                hitEntities.add(entity);
                             }
                         }
                     }
@@ -119,10 +120,36 @@ public class PlayerInteract implements Listener {
         sALoopCount = 0;
         sATaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(SleepyEnchants.getPlugin(SleepyEnchants.class), new Runnable() {
 
+            ArrayList<Entity> hitEntities = new ArrayList<Entity>();
+
             @Override
             public void run() {
                 location.setYaw(location.getYaw()+20);
                 player.teleport(location);
+
+                Location origin = player.getEyeLocation();
+                Vector direction = origin.getDirection();
+                World world = origin.getWorld();
+                if (world != null) {
+                    Location loc1 = origin.clone().add(direction);
+                    Location loc2 = loc1.clone().add(direction);
+                    Location loc3 = loc2.clone().add(direction);
+                    Location loc4 = loc3.clone().add(direction);
+
+                    Location[] locations = {loc1, loc2, loc3, loc4};
+                    for (Location loc : locations) {
+                        world.spawnParticle(Particle.CLOUD, loc, 0);
+                        for (Entity entity : world.getNearbyEntities(loc, 2, 2, 2)) {
+                            if (entity instanceof LivingEntity && !hitEntities.contains(entity)) {
+                                if (!entity.equals(player)) {
+                                    ((LivingEntity) entity).damage(6);
+                                    hitEntities.add(entity);
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (sALoopCount == 17) {
                     Bukkit.getScheduler().cancelTask(sATaskID);
                 }
