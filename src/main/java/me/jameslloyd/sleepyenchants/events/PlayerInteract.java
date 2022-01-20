@@ -5,6 +5,9 @@ import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.particles.Effects;
 import me.jameslloyd.sleepyenchants.particles.ParticleData;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -121,10 +124,12 @@ public class PlayerInteract implements Listener {
         sATaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(SleepyEnchants.getPlugin(SleepyEnchants.class), new Runnable() {
 
             ArrayList<Entity> hitEntities = new ArrayList<Entity>();
+            final double attackDamage = player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue();
+            final int enchantLevel = itemInHand.getEnchantmentLevel(CustomEnchants.SPINATTACK);
 
             @Override
             public void run() {
-                location.setYaw(location.getYaw()+20);
+                location.setYaw(location.getYaw()+60);
                 player.teleport(location);
 
                 Location origin = player.getEyeLocation();
@@ -141,8 +146,8 @@ public class PlayerInteract implements Listener {
                         world.spawnParticle(Particle.CLOUD, loc, 0);
                         for (Entity entity : world.getNearbyEntities(loc, 2, 2, 2)) {
                             if (entity instanceof LivingEntity && !hitEntities.contains(entity)) {
-                                if (!entity.equals(player)) {
-                                    ((LivingEntity) entity).damage(6);
+                                if (!entity.equals(player)) {;
+                                    ((LivingEntity) entity).damage(attackDamage + enchantLevel);
                                     hitEntities.add(entity);
                                 }
                             }
@@ -150,7 +155,8 @@ public class PlayerInteract implements Listener {
                     }
                 }
 
-                if (sALoopCount == 17) {
+                if (sALoopCount == 5) {
+
                     Bukkit.getScheduler().cancelTask(sATaskID);
                 }
                 sALoopCount++;
@@ -159,5 +165,39 @@ public class PlayerInteract implements Listener {
 
         PlayerToggleSneak.fullCharged.remove(player.getUniqueId());
         sendMsg(player, "&aYou used the Spin Attack ability!");
+
+        // Urbosa's Fury code
+        if (itemInHand == null) return;
+        if (!itemInHand.hasItemMeta()) return;
+        if (!itemInHand.getItemMeta().hasEnchant(CustomEnchants.URBOSASFURY)) return;
+
+        Block stoodBlock = location.getBlock().getRelative(BlockFace.DOWN);
+
+        // first set
+        Location locNorth = stoodBlock.getRelative(BlockFace.NORTH).getLocation();
+        Location locEast = stoodBlock.getRelative(BlockFace.EAST).getLocation();
+        Location locSouth = stoodBlock.getRelative(BlockFace.SOUTH).getLocation();
+        Location locWest = stoodBlock.getRelative(BlockFace.WEST).getLocation();
+
+        // second set
+        Location locNorthEast = stoodBlock.getRelative(BlockFace.NORTH_EAST).getLocation();
+        Location locSouthEast = stoodBlock.getRelative(BlockFace.SOUTH_EAST).getLocation();
+        Location locSouthWest = stoodBlock.getRelative(BlockFace.SOUTH_WEST).getLocation();
+        Location locNorthWest = stoodBlock.getRelative(BlockFace.NORTH_WEST).getLocation();
+
+
+        Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+            location.getWorld().strikeLightning(locNorth);
+            location.getWorld().strikeLightning(locEast);
+            location.getWorld().strikeLightning(locSouth);
+            location.getWorld().strikeLightning(locWest);
+        }, 8);
+
+        Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+            location.getWorld().strikeLightning(locNorthEast);
+            location.getWorld().strikeLightning(locSouthEast);
+            location.getWorld().strikeLightning(locSouthWest);
+            location.getWorld().strikeLightning(locNorthWest);
+        }, 16);
     }
 }

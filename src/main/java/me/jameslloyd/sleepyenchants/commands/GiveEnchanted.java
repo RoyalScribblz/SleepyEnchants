@@ -38,6 +38,21 @@ public class GiveEnchanted implements CommandExecutor {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level);
         }
 
+        if (enchantName.toLowerCase().equals("urbosasfury")) {
+            ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
+            item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
+            item.addUnsafeEnchantment(CustomEnchants.URBOSASFURY, level);
+
+            ItemMeta meta = item.getItemMeta();
+            List<String> lore = new ArrayList<String>();
+            lore.add(ChatColor.GOLD + "Spin Attack II");
+            lore.add(ChatColor.LIGHT_PURPLE + "Urbosa's Fury");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            ((Player) s).getInventory().addItem(item);
+        }
+
         return true;
     }
 
