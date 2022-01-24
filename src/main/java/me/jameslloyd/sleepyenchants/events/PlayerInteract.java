@@ -46,8 +46,11 @@ public class PlayerInteract implements Listener {
         if ((action == Action.LEFT_CLICK_AIR) || (action == Action.LEFT_CLICK_BLOCK)) {
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.BLADEBEAM)) bladeBeam();
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SPINATTACK)) spinAttack();
-        } else if (!((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK))) {
+        }
+        if ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK)) {
+            sendMsg(player, "right click event");
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SWORDSDANCE)) swordsDance();
+            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DASH)) dash();
         }
     }
 
@@ -199,5 +202,11 @@ public class PlayerInteract implements Listener {
             location.getWorld().strikeLightning(locSouthWest);
             location.getWorld().strikeLightning(locNorthWest);
         }, 16);
+    }
+
+    public void dash() {
+        if (!player.isSneaking()) return;
+        player.setVelocity(player.getLocation().getDirection().multiply(2));
+        sendMsg(player, "&aYou used the Dash ability!");
     }
 }

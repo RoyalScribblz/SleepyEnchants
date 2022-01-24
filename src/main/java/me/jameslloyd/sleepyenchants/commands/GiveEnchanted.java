@@ -26,19 +26,19 @@ public class GiveEnchanted implements CommandExecutor {
         String enchantName = args[0];
         int level = Integer.parseInt(args[1]);
 
-        if (enchantName.toLowerCase().equals("swordsdance")) {
+        if (enchantName.equalsIgnoreCase("swordsdance")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SWORDSDANCE, ChatColor.GOLD, level);
         }
 
-        if (enchantName.toLowerCase().equals("bladebeam")) {
+        if (enchantName.equalsIgnoreCase("bladebeam")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.BLADEBEAM, ChatColor.LIGHT_PURPLE, level);
         }
 
-        if (enchantName.toLowerCase().equals("spinattack")) {
+        if (enchantName.equalsIgnoreCase("spinattack")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level);
         }
 
-        if (enchantName.toLowerCase().equals("urbosasfury")) {
+        if (enchantName.equalsIgnoreCase("urbosasfury")) {
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
             item.addUnsafeEnchantment(CustomEnchants.URBOSASFURY, level);
@@ -51,6 +51,10 @@ public class GiveEnchanted implements CommandExecutor {
             item.setItemMeta(meta);
 
             ((Player) s).getInventory().addItem(item);
+        }
+
+        if (enchantName.equalsIgnoreCase("dash")) {
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DASH, ChatColor.GOLD, level);
         }
 
         return true;
