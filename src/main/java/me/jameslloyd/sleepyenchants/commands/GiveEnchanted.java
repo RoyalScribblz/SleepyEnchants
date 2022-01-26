@@ -3,16 +3,20 @@ package me.jameslloyd.sleepyenchants.commands;
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class GiveEnchanted implements CommandExecutor {
 
@@ -27,23 +31,23 @@ public class GiveEnchanted implements CommandExecutor {
         int level = Integer.parseInt(args[1]);
 
         if (enchantName.equalsIgnoreCase("swordsdance")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SWORDSDANCE, ChatColor.GOLD, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SWORDSDANCE, ChatColor.GOLD, level, true);
         }
 
         if (enchantName.equalsIgnoreCase("bladebeam")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.BLADEBEAM, ChatColor.LIGHT_PURPLE, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.BLADEBEAM, ChatColor.LIGHT_PURPLE, level, true);
         }
 
         if (enchantName.equalsIgnoreCase("spinattack")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level, true);
         }
         if (enchantName.equalsIgnoreCase("excalibur")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.EXCALIBUR, ChatColor.LIGHT_PURPLE, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.EXCALIBUR, ChatColor.LIGHT_PURPLE, level, true);
         }
         if (enchantName.equalsIgnoreCase("devilsscythe")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DEVILSSCYTHE, ChatColor.GREEN, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DEVILSSCYTHE, ChatColor.GREEN, level, true);
         }
-        if (enchantName.equalsIgnoreCase("urbosasfury")) {
+        if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
             item.addUnsafeEnchantment(CustomEnchants.URBOSASFURY, level);
@@ -56,15 +60,23 @@ public class GiveEnchanted implements CommandExecutor {
 
             ((Player) s).getInventory().addItem(item);
         }
-
         if (enchantName.equalsIgnoreCase("dash")) {
-            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DASH, ChatColor.GOLD, level);
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DASH, ChatColor.GOLD, level, true);
+        }
+        if (enchantName.equalsIgnoreCase("swiftblade")) {  // TODO value from item dissappears but functionally does increase speed
+            ItemStack item = giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SWIFTBLADE, ChatColor.GREEN, level, false);
+            double additionalSpeed = item.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 0.5;
+            ItemMeta meta = item.getItemMeta();
+            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+                    new AttributeModifier(UUID.randomUUID(), "attackSpeed", additionalSpeed, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
+            item.setItemMeta(meta);
+            ((Player) s).getInventory().addItem(item);
         }
 
         return true;
     }
 
-    public void giveEnchantedItem(Material material, Enchantment enchant, ChatColor colour, int level) {
+    public ItemStack giveEnchantedItem(Material material, Enchantment enchant, ChatColor colour, int level, boolean giveItem) {
         ItemStack item = new ItemStack(material);
         item.addUnsafeEnchantment(enchant, level);
         String name = enchant.getName();
@@ -91,6 +103,9 @@ public class GiveEnchanted implements CommandExecutor {
         meta.setLore(lore);
         item.setItemMeta(meta);
 
-        ((Player) s).getInventory().addItem(item);
+        if (giveItem) {
+            ((Player) s).getInventory().addItem(item);
+        }
+        return item;
     }
 }
