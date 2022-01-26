@@ -51,7 +51,52 @@ public class PlayerInteract implements Listener {
             sendMsg(player, "right click event");
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SWORDSDANCE)) swordsDance();
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DASH)) dash();
+            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.EXCALIBUR)) excalibur();
         }
+    }
+
+    Map<String, Long> exCooldowns = new HashMap<String, Long>();
+    public void excalibur() {
+        String playerName = player.getName();
+        if (exCooldowns.containsKey(player.getName())) {
+            if (exCooldowns.get(playerName) > System.currentTimeMillis()) {
+                long timeLeft = (exCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                return;
+            }
+        }
+        int coolDownTime = 600 - (itemInHand.getEnchantmentLevel(CustomEnchants.EXCALIBUR) * 10);
+        exCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
+
+        // particles
+        ParticleData particle = new ParticleData(player.getUniqueId());
+        if (particle.hasID()) {
+            particle.endTask();
+            particle.removeID();
+        }
+        Effects effects = new Effects(player);
+        effects.startTotem();
+        Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+            particle.endTask();
+            particle.removeID();
+        }, 60*20);
+        Map<String, Long> exCooldowns = new HashMap<String, Long>();
+        //Instant Health II
+        //Strength — 1 minute
+        //Speed — 1 minute
+        //Resistance — 1 minute
+        //Regeneration — 10 seconds
+        //Absorption — 2 minutes
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1*20, 1, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60*20, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60*20, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60*20, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 10*20, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120*20, 0, true, false));
+
+        player.playSound(player.getLocation(), "minecraft:custom.excalibur", SoundCategory.MASTER, 100, 1);
+        sendMsg(player, "&aUsing the Excalibur enchant!");
     }
 
     Map<String, Long> sDCooldowns = new HashMap<String, Long>();
@@ -64,7 +109,7 @@ public class PlayerInteract implements Listener {
                 return;
             }
         }
-        int coolDownTime = 300 - (itemInHand.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) - 1) * 10;
+        int coolDownTime = 300 - (itemInHand.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 10);
         sDCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
 
         // particles
@@ -204,9 +249,22 @@ public class PlayerInteract implements Listener {
         }, 16);
     }
 
+    Map<String, Long> dashCooldowns = new HashMap<String, Long>();
     public void dash() {
+        String playerName = player.getName();
+        if (dashCooldowns.containsKey(player.getName())) {
+            if (dashCooldowns.get(playerName) > System.currentTimeMillis()) {
+                long timeLeft = (dashCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                return;
+            }
+        }
+        int coolDownTime = 7;
+        dashCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
         if (!player.isSneaking()) return;
-        player.setVelocity(player.getLocation().getDirection().multiply(2));
+        itemInHand = player.getInventory().getItemInMainHand();
+        double dist = 1.25 * (itemInHand.getEnchantmentLevel(CustomEnchants.DASH)+1);
+        player.setVelocity(player.getLocation().getDirection().multiply(dist));
         sendMsg(player, "&aYou used the Dash ability!");
     }
 }

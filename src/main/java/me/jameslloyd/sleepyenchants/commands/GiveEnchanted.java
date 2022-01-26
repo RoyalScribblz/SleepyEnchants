@@ -37,12 +37,16 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("spinattack")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level);
         }
-
+        if (enchantName.equalsIgnoreCase("excalibur")) {
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.EXCALIBUR, ChatColor.LIGHT_PURPLE, level);
+        }
+        if (enchantName.equalsIgnoreCase("devilsscythe")) {
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DEVILSSCYTHE, ChatColor.GREEN, level);
+        }
         if (enchantName.equalsIgnoreCase("urbosasfury")) {
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
             item.addUnsafeEnchantment(CustomEnchants.URBOSASFURY, level);
-
             ItemMeta meta = item.getItemMeta();
             List<String> lore = new ArrayList<String>();
             lore.add(ChatColor.GOLD + "Spin Attack II");
