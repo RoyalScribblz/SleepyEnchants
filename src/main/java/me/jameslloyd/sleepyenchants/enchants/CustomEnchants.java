@@ -19,11 +19,12 @@ public class CustomEnchants {
     public static final Enchantment DASH = new EnchantmentWrapper("dash", "Dash", 3);
     public static final Enchantment DEVILSSCYTHE = new EnchantmentWrapper("devilsscythe", "Devil's Scythe", 5);
     public static final Enchantment SWIFTBLADE = new EnchantmentWrapper("swiftblade", "Swift Blade", 5);
+    public static final Enchantment ICEASPECT = new EnchantmentWrapper("iceaspect", "Ice Aspect", 2);
 
     public static void register() {
         // register each enchant in this array
         for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
-                DEVILSSCYTHE, SWIFTBLADE}) {
+                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT}) {
             boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchant);
             if (!registered) registerEnchantment(enchant);
         }
