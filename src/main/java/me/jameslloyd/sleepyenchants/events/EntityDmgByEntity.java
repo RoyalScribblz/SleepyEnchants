@@ -56,5 +56,7 @@ public class EntityDmgByEntity implements Listener {
         int duration = 4 * (itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT) + 1);
         ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,
                 duration * 20, 1, true, false));
+        player.playSound(player.getLocation(), "minecraft:custom.iceaspect", SoundCategory.MASTER, 100, 1);
+        sendMsg(player, "&aUsing the Ice Aspect enchant!");
     }
 }
