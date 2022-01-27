@@ -47,6 +47,10 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("devilsscythe")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DEVILSSCYTHE, ChatColor.GREEN, level, true);
         }
+        if (enchantName.equalsIgnoreCase("iceaspect")) {
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.ICEASPECT, ChatColor.GREEN, level, true);
+        }
+
         if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
@@ -63,7 +67,7 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("dash")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.DASH, ChatColor.GOLD, level, true);
         }
-        if (enchantName.equalsIgnoreCase("swiftblade")) {  // TODO value from item dissappears but functionally does increase speed
+        if (enchantName.equalsIgnoreCase("swiftblade")) {  // TODO value from item disappears but functionally does increase speed
             ItemStack item = giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SWIFTBLADE, ChatColor.GREEN, level, false);
             double additionalSpeed = item.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 0.5;
             ItemMeta meta = item.getItemMeta();

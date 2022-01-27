@@ -261,7 +261,6 @@ public class PlayerInteract implements Listener {
         }
         int coolDownTime = 7;
         dashCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
-        if (!player.isSneaking()) return;
         itemInHand = player.getInventory().getItemInMainHand();
         double dist = 1.25 * (itemInHand.getEnchantmentLevel(CustomEnchants.DASH)+1);
         player.setVelocity(player.getLocation().getDirection().multiply(dist));
