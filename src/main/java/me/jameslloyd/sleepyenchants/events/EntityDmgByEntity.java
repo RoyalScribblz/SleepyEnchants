@@ -47,7 +47,7 @@ public class EntityDmgByEntity implements Listener {
 
     public void devilsScythe(EntityDamageByEntityEvent e) {
         double trigger = ThreadLocalRandom.current().nextDouble() * 100;
-        double trigger_chance = (itemInHand.getEnchantmentLevel(CustomEnchants.DEVILSSCYTHE) +1)  * 2;
+        double trigger_chance = itemInHand.getEnchantmentLevel(CustomEnchants.DEVILSSCYTHE)  * 2;
 
         if(trigger <= trigger_chance) {
             entity.addPotionEffect(new PotionEffect(PotionEffectType.HARM,
@@ -59,7 +59,7 @@ public class EntityDmgByEntity implements Listener {
     }
 
     public void iceAspect(EntityDamageByEntityEvent e){
-        int duration = 4 * (itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT) + 1);
+        int duration = 4 * itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT)
         ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,  // add slowness effect
                 duration * 20, 1, true, false));
         player.playSound(player.getLocation(), "minecraft:custom.iceaspect", SoundCategory.MASTER, 100, 1);
@@ -72,7 +72,7 @@ public class EntityDmgByEntity implements Listener {
             double zOffset = ThreadLocalRandom.current().nextDouble();
             Location particleLoc = entityLoc.clone().add(xOffset-0.5, yOffset+0.8, zOffset-0.5);
 
-            entity.getWorld().spawnParticle(Particle.SNOWBALL, particleLoc, 1);
+            entity.getWorld().spawnParticle(Particle.SNOWFLAKE, particleLoc, 1);
         }
 
         sendMsg(player, "&aUsing the Ice Aspect enchant!");

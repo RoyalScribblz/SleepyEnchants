@@ -65,7 +65,7 @@ public class PlayerInteract implements Listener {
                 return;
             }
         }
-        int coolDownTime = 600 - (itemInHand.getEnchantmentLevel(CustomEnchants.EXCALIBUR) * 10);
+        int coolDownTime = 600 - ((itemInHand.getEnchantmentLevel(CustomEnchants.EXCALIBUR)-1) * 10);
         exCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
 
         // particles
@@ -109,7 +109,7 @@ public class PlayerInteract implements Listener {
                 return;
             }
         }
-        int coolDownTime = 300 - (itemInHand.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 10);
+        int coolDownTime = 300 - ((itemInHand.getEnchantmentLevel(CustomEnchants.SWORDSDANCE)-1) * 10);
         sDCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
 
         // particles
@@ -262,7 +262,7 @@ public class PlayerInteract implements Listener {
         int coolDownTime = 7;
         dashCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
         itemInHand = player.getInventory().getItemInMainHand();
-        double dist = 1.25 * (itemInHand.getEnchantmentLevel(CustomEnchants.DASH)+1);
+        double dist = 1.25 * itemInHand.getEnchantmentLevel(CustomEnchants.DASH);
         player.setVelocity(player.getLocation().getDirection().multiply(dist));
         sendMsg(player, "&aYou used the Dash ability!");
     }
