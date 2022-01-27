@@ -34,13 +34,12 @@ public class EntityDmgByEntity implements Listener {
             if (itemInHand == null) return;
             if (!itemInHand.hasItemMeta()) return;
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DEVILSSCYTHE)) devilsScythe(e);
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.ICEASPECT)) iceAspect(e);
-
         }
     }
 
     public void devilsScythe(EntityDamageByEntityEvent e) {
         double trigger = Math.random() * 100;
+        itemInHand = player.getInventory().getItemInMainHand();
         double trigger_chance = (itemInHand.getEnchantmentLevel(CustomEnchants.DEVILSSCYTHE) +1)  * 2;
 
         if(trigger <= trigger_chance) {
@@ -50,11 +49,5 @@ public class EntityDmgByEntity implements Listener {
             sendMsg(player, "&aUsing the Devil's Scythe enchant!");
 
         }
-    }
-
-    public void iceAspect(EntityDamageByEntityEvent e){
-        int duration = 4 * (itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT) + 1);
-        ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,
-                duration * 20, 1, true, false));
     }
 }
