@@ -14,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class EntityDmgByEntity implements Listener {
 
     private void sendMsg(CommandSender sender, String msg) {
@@ -40,7 +42,7 @@ public class EntityDmgByEntity implements Listener {
     }
 
     public void devilsScythe(EntityDamageByEntityEvent e) {
-        double trigger = Math.random() * 100;
+        double trigger = ThreadLocalRandom.current().nextDouble() * 100;
         double trigger_chance = (itemInHand.getEnchantmentLevel(CustomEnchants.DEVILSSCYTHE) +1)  * 2;
 
         if(trigger <= trigger_chance) {
