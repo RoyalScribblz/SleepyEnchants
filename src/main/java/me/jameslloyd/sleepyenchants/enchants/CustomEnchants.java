@@ -19,7 +19,7 @@ public class CustomEnchants {
     public static final Enchantment DASH = new EnchantmentWrapper("dash", "Dash", 3);
     public static final Enchantment DEVILSSCYTHE = new EnchantmentWrapper("devilsscythe", "Devil's Scythe", 5);
     public static final Enchantment SWIFTBLADE = new EnchantmentWrapper("swiftblade", "Swift Blade", 5);
-    public static final Enchantment ICEASPECT = new EnchantmentWrapper("iceaspect", "Ice Aspect", 2);
+    public static final Enchantment ICEASPECT = new EnchantmentWrapper("iceaspect", "Ice Aspect", 2 );
 
     public static void register() {
         // register each enchant in this array
