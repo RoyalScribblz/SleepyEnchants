@@ -33,16 +33,15 @@ public class PlayerShift implements Listener {
     @EventHandler
     public void onPlayerShift(PlayerToggleSneakEvent e){
         player = e.getPlayer();
-        sendMsg(player, "Sneak Event");
         Armor = player.getInventory().getChestplate();
         if (Armor == null) return;
         if (!Armor.hasItemMeta()) return;
-        if (Armor.getItemMeta().hasEnchant(CustomEnchants.ACEBOMBER)) aceBomber();
+        if (Armor.getItemMeta().hasEnchant(CustomEnchants.BOMBERACE)) bomberAce();
 
     }
 
     Map<String, Long> aceCooldowns = new HashMap<String, Long>();
-    public void aceBomber(){
+    public void bomberAce(){
         String playerName = player.getName();
         if(!player.isGliding()) return;
         if (aceCooldowns.containsKey(player.getName())) {
@@ -52,7 +51,7 @@ public class PlayerShift implements Listener {
                 return;
             }
         }
-        int coolDownTime = 30 - ((Armor.getEnchantmentLevel(CustomEnchants.ACEBOMBER)-1) * 5);
+        int coolDownTime = 30 - ((Armor.getEnchantmentLevel(CustomEnchants.BOMBERACE)-1) * 10);
         aceCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
 
         TNT = (TNTPrimed)player.getWorld().spawnEntity(player.getLocation(), EntityType.PRIMED_TNT);

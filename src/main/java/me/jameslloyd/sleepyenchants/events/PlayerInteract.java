@@ -75,7 +75,7 @@ public class PlayerInteract implements Listener {
             particle.removeID();
         }
         Effects effects = new Effects(player);
-        effects.startTotem();
+        effects.startTotem(Particle.END_ROD);
         Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
             particle.endTask();
             particle.removeID();
@@ -119,7 +119,7 @@ public class PlayerInteract implements Listener {
             particle.removeID();
         }
         Effects effects = new Effects(player);
-        effects.startTotem();
+        effects.startTotem(Particle.WAX_OFF);
         Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
             particle.endTask();
             particle.removeID();

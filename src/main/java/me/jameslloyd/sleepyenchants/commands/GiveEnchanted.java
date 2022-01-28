@@ -51,8 +51,8 @@ public class GiveEnchanted implements CommandExecutor {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.ICEASPECT, ChatColor.GREEN, level, true);
         }
 
-        if (enchantName.equalsIgnoreCase("acebomber")) {
-            giveEnchantedItem(Material.ELYTRA, CustomEnchants.ACEBOMBER, ChatColor.GOLD, level, true);
+        if (enchantName.equalsIgnoreCase("bomberace")) {
+            giveEnchantedItem(Material.ELYTRA, CustomEnchants.BOMBERACE, ChatColor.GOLD, level, true);
         }
 
         if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this

@@ -14,7 +14,7 @@ public class Effects {
         this.player = player;
     }
 
-    public void startTotem() {
+    public void startTotem(Particle p) {
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(SleepyEnchants.getPlugin(SleepyEnchants.class), new Runnable() {
 
             double var = 0;
@@ -33,8 +33,8 @@ public class Effects {
                 first = loc.clone().add(Math.cos(var), Math.sin(var)+1, Math.sin(var));
                 second = loc.clone().add(Math.cos(var + Math.PI), Math.sin(var)+1, Math.sin(var + Math.PI));
 
-                player.getWorld().spawnParticle(Particle.END_ROD, first, 0);
-                player.getWorld().spawnParticle(Particle.END_ROD, second, 0);
+                player.getWorld().spawnParticle(p, first, 0);
+                player.getWorld().spawnParticle(p, second, 0);
             }
         }, 0, 1);
     }
