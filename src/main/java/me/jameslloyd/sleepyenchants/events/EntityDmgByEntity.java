@@ -41,7 +41,7 @@ public class EntityDmgByEntity implements Listener {
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DEVILSSCYTHE)) devilsScythe(e);
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.ICEASPECT)) iceAspect(e);
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.WINGARDIUMLEVIOSA)) wingardiumLeviosa(e);
-
+            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SHEERCOLD)) sheerCold(e);
         }
     }
 
@@ -59,7 +59,7 @@ public class EntityDmgByEntity implements Listener {
                 Location particleLoc = entityLoc.clone().add(xOffset - 0.5, yOffset + 0.8, zOffset - 0.5);
 
                 entity.getWorld().spawnParticle(Particle.SOUL, particleLoc, 1);
-                ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.HARM,
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.HARM,
                         1 * 20, 1, true, false));
                 player.playSound(player.getLocation(), "minecraft:custom.devilsscythe", SoundCategory.MASTER, 100, 1);
             }
@@ -69,7 +69,7 @@ public class EntityDmgByEntity implements Listener {
 
     public void iceAspect(EntityDamageByEntityEvent e) {
         int duration = 4 * itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT);
-        ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,  // add slowness effect
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,  // add slowness effect
                 duration * 20, 1, true, false));
         player.playSound(player.getLocation(), "minecraft:custom.iceaspect", SoundCategory.MASTER, 100, 1);
 
@@ -85,15 +85,23 @@ public class EntityDmgByEntity implements Listener {
 
         sendMsg(player, "&aUsing the Ice Aspect enchant!");
     }
+
     public void wingardiumLeviosa(EntityDamageByEntityEvent e) {
         double trigger = ThreadLocalRandom.current().nextDouble() * 100;
         double trigger_chance = itemInHand.getEnchantmentLevel(CustomEnchants.WINGARDIUMLEVIOSA) * 5;
 
         if(trigger <= trigger_chance) {
-            ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
-                        20 * 4, 0, true, true));
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
+                    20 * 4, 0, true, false));
             player.playSound(player.getLocation(), "minecraft:custom.winggardiumleviosa", SoundCategory.MASTER, 100, 1);
             sendMsg(player, "&aUsing the Wingardium Leviosa enchant!");
         }
+    }
+
+    public void sheerCold(EntityDamageByEntityEvent e) {
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,
+                20 * 4 * itemInHand.getEnchantmentLevel(CustomEnchants.SHEERCOLD),
+                2, true, false));
+        System.out.println("sheerColdSLOW");
     }
 }

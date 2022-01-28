@@ -23,12 +23,13 @@ public class CustomEnchants {
     public static final Enchantment BOMBERACE = new EnchantmentWrapper("bomberace", "Bomber Ace", 3);
     public static final Enchantment DRAGONDANCE = new EnchantmentWrapper("dragondance", "Dragon Dance", 5);
     public static final Enchantment WINGARDIUMLEVIOSA = new EnchantmentWrapper("wingardiumleviosa", "Wingardium Leviosa", 3);
+    public static final Enchantment SHEERCOLD = new EnchantmentWrapper("sheercold", "Sheer Cold", 2);
 
 
     public static void register() {
         // register each enchant in this array
         for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
-                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA}) {
+                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD}) {
             boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchant);
             if (!registered) registerEnchantment(enchant);
         }

@@ -46,7 +46,6 @@ public class PlayerInteract implements Listener {
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SPINATTACK)) spinAttack();
         }
         if ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK)) {
-            sendMsg(player, "right click event");
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SWORDSDANCE)) swordsDance();
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DASH)) dash();
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.EXCALIBUR)) excalibur();

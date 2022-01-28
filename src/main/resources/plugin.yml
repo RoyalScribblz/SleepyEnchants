@@ -3,7 +3,7 @@ version: '${project.version}'
 main: me.jameslloyd.sleepyenchants.SleepyEnchants
 api-version: 1.18
 prefix: SleepyEnchants
-authors: [ JamesLloyd ]
+authors: [JamesLloyd, SleepyDunsparce]
 description: Custom Enchants Plugin
 commands:
   ge:

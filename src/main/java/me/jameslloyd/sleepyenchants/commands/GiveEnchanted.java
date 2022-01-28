@@ -82,7 +82,9 @@ public class GiveEnchanted implements CommandExecutor {
             item.setItemMeta(meta);
             ((Player) s).getInventory().addItem(item);
         }
-
+        if (enchantName.equalsIgnoreCase("sheercold")) {
+            giveEnchantedItem(Material.BOW, CustomEnchants.SHEERCOLD, ChatColor.DARK_GRAY, level, true);
+        }
         return true;
     }
 
