@@ -35,7 +35,6 @@ public class EntityDmgByEntity implements Listener {
         if (damager instanceof Player) {
             player = (Player) damager;
             // player who damaged the entity
-            sendMsg(player, "attack event");
             itemInHand = player.getInventory().getItemInMainHand();
             if (itemInHand == null) return;
             if (!itemInHand.hasItemMeta()) return;
@@ -64,7 +63,7 @@ public class EntityDmgByEntity implements Listener {
                         1 * 20, 1, true, false));
                 player.playSound(player.getLocation(), "minecraft:custom.devilsscythe", SoundCategory.MASTER, 100, 1);
             }
-            sendMsg(player, "&aUsing the Devil's Scythe enchant!")
+            sendMsg(player, "&aUsing the Devil's Scythe enchant!");
         }
     }
 
@@ -92,9 +91,9 @@ public class EntityDmgByEntity implements Listener {
 
         if(trigger <= trigger_chance) {
             ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
-                        1 * 4, 0, true, true));
-                player.playSound(player.getLocation(), "minecraft:custom.winggardiumleviosa", SoundCategory.MASTER, 100, 1);
-                sendMsg(player, "&aUsing the Wingardium Leviosa enchant!");
-            }
+                        20 * 4, 0, true, true));
+            player.playSound(player.getLocation(), "minecraft:custom.winggardiumleviosa", SoundCategory.MASTER, 100, 1);
+            sendMsg(player, "&aUsing the Wingardium Leviosa enchant!");
         }
     }
+}
