@@ -50,10 +50,42 @@ public class PlayerInteract implements Listener {
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SWORDSDANCE)) swordsDance();
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DASH)) dash();
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.EXCALIBUR)) excalibur();
+            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DRAGONDANCE)) dragonDance();
         }
     }
 
+    Map<String, Long> ddCooldowns = new HashMap<String, Long>();
+    public void dragonDance() {
+        String playerName = player.getName();
+        if (ddCooldowns.containsKey(player.getName())) {
+            if (ddCooldowns.get(playerName) > System.currentTimeMillis()) {
+                long timeLeft = (ddCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                return;
+            }
+        }
+        int coolDownTime = 300 - ((itemInHand.getEnchantmentLevel(CustomEnchants.EXCALIBUR)-1) * 10);
+        ddCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
 
+        // particles
+        ParticleData particle = new ParticleData(player.getUniqueId());
+        if (particle.hasID()) {
+            particle.endTask();
+            particle.removeID();
+        }
+        Effects effects = new Effects(player);
+        effects.startTotem(Particle.DRAGON_BREATH);
+        Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+            particle.endTask();
+            particle.removeID();
+        }, 60*20);
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60*20, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60*20, 1, true, false));
+
+        player.playSound(player.getLocation(), "minecraft:custom.dragondance", SoundCategory.MASTER, 100, 1);
+        sendMsg(player, "&aUsing the Dragon Dance enchant!");
+    }
 
     Map<String, Long> exCooldowns = new HashMap<String, Long>();
     public void excalibur() {

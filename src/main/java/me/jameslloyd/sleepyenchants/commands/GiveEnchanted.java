@@ -33,11 +33,12 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("swordsdance")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SWORDSDANCE, ChatColor.GOLD, level, true);
         }
-
+        if (enchantName.equalsIgnoreCase("dragondance")) {
+            giveEnchantedItem(Material.DIAMOND_AXE, CustomEnchants.DRAGONDANCE, ChatColor.GOLD, level, true);
+        }
         if (enchantName.equalsIgnoreCase("bladebeam")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.BLADEBEAM, ChatColor.LIGHT_PURPLE, level, true);
         }
-
         if (enchantName.equalsIgnoreCase("spinattack")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.SPINATTACK, ChatColor.GOLD, level, true);
         }
@@ -50,11 +51,9 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("iceaspect")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.ICEASPECT, ChatColor.GREEN, level, true);
         }
-
         if (enchantName.equalsIgnoreCase("bomberace")) {
             giveEnchantedItem(Material.ELYTRA, CustomEnchants.BOMBERACE, ChatColor.GOLD, level, true);
         }
-
         if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
