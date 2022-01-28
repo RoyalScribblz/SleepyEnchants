@@ -51,6 +51,10 @@ public class GiveEnchanted implements CommandExecutor {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.ICEASPECT, ChatColor.GREEN, level, true);
         }
 
+        if (enchantName.equalsIgnoreCase("acebomber")) {
+            giveEnchantedItem(Material.ELYTRA, CustomEnchants.ACEBOMBER, ChatColor.GOLD, level, true);
+        }
+
         if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);

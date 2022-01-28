@@ -59,7 +59,7 @@ public class EntityDmgByEntity implements Listener {
     }
 
     public void iceAspect(EntityDamageByEntityEvent e){
-        int duration = 4 * itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT)
+        int duration = 4 * itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT);
         ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,  // add slowness effect
                 duration * 20, 1, true, false));
         player.playSound(player.getLocation(), "minecraft:custom.iceaspect", SoundCategory.MASTER, 100, 1);

@@ -9,9 +9,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -26,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerInteract implements Listener {
-
+    ItemStack itemOnChest;
     ItemStack itemInHand;
     Player player;
 
@@ -54,6 +52,8 @@ public class PlayerInteract implements Listener {
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.EXCALIBUR)) excalibur();
         }
     }
+
+
 
     Map<String, Long> exCooldowns = new HashMap<String, Long>();
     public void excalibur() {

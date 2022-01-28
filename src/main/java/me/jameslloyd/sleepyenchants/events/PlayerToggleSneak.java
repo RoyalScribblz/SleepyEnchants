@@ -6,14 +6,19 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerToggleSneak implements Listener {
@@ -21,19 +26,17 @@ public class PlayerToggleSneak implements Listener {
     private void sendMsg(CommandSender sender, String msg) {
         sender.sendMessage((ChatColor.translateAlternateColorCodes('&', msg)));
     }
-
+    Player player;
+    ItemStack itemInHand;
     private int taskID;
     public static ArrayList<UUID> fullCharged = new ArrayList<UUID>();
 
     @EventHandler
     public void onToggleSneak(PlayerToggleSneakEvent e) {
-
-        Player player = e.getPlayer();
-        ItemStack itemInHand = player.getInventory().getItemInMainHand();
-
+        player = e.getPlayer();
+        itemInHand = player.getInventory().getItemInMainHand();
         if (itemInHand == null) return;
         if (!itemInHand.hasItemMeta()) return;
-
         if (!itemInHand.getItemMeta().hasEnchant(CustomEnchants.SPINATTACK)) return;
 
         if (e.isSneaking()) {
