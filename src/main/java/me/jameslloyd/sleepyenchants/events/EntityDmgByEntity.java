@@ -63,8 +63,8 @@ public class EntityDmgByEntity implements Listener {
                 ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.HARM,
                         1 * 20, 1, true, false));
                 player.playSound(player.getLocation(), "minecraft:custom.devilsscythe", SoundCategory.MASTER, 100, 1);
-                sendMsg(player, "&aUsing the Devil's Scythe enchant!");
             }
+            sendMsg(player, "&aUsing the Devil's Scythe enchant!")
         }
     }
 
