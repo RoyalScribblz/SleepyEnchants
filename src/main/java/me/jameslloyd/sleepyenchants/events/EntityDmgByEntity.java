@@ -41,24 +41,34 @@ public class EntityDmgByEntity implements Listener {
             if (!itemInHand.hasItemMeta()) return;
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DEVILSSCYTHE)) devilsScythe(e);
             if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.ICEASPECT)) iceAspect(e);
+            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.WINGARDIUMLEVIOSA)) wingardiumLeviosa(e);
 
         }
     }
 
     public void devilsScythe(EntityDamageByEntityEvent e) {
         double trigger = ThreadLocalRandom.current().nextDouble() * 100;
-        double trigger_chance = itemInHand.getEnchantmentLevel(CustomEnchants.DEVILSSCYTHE)  * 2;
+        double trigger_chance = itemInHand.getEnchantmentLevel(CustomEnchants.DEVILSSCYTHE) * 2;
 
         if(trigger <= trigger_chance) {
-            entity.addPotionEffect(new PotionEffect(PotionEffectType.HARM,
-                    1 * 20, 1, true, false));
-            player.playSound(player.getLocation(), "minecraft:custom.devilsscythe", SoundCategory.MASTER, 100, 1);
-            sendMsg(player, "&aUsing the Devil's Scythe enchant!");
+            // spawn 20 soul particles in random places around the hit entity
+            Location entityLoc = entity.getLocation();
+            for (int i = 0; i < 20; i++) {
+                double xOffset = ThreadLocalRandom.current().nextDouble();
+                double yOffset = ThreadLocalRandom.current().nextDouble();
+                double zOffset = ThreadLocalRandom.current().nextDouble();
+                Location particleLoc = entityLoc.clone().add(xOffset - 0.5, yOffset + 0.8, zOffset - 0.5);
 
+                entity.getWorld().spawnParticle(Particle.SOUL, particleLoc, 1);
+                ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.HARM,
+                        1 * 20, 1, true, false));
+                player.playSound(player.getLocation(), "minecraft:custom.devilsscythe", SoundCategory.MASTER, 100, 1);
+                sendMsg(player, "&aUsing the Devil's Scythe enchant!");
+            }
         }
     }
 
-    public void iceAspect(EntityDamageByEntityEvent e){
+    public void iceAspect(EntityDamageByEntityEvent e) {
         int duration = 4 * itemInHand.getEnchantmentLevel(CustomEnchants.ICEASPECT);
         ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,  // add slowness effect
                 duration * 20, 1, true, false));
@@ -71,10 +81,20 @@ public class EntityDmgByEntity implements Listener {
             double yOffset = ThreadLocalRandom.current().nextDouble();
             double zOffset = ThreadLocalRandom.current().nextDouble();
             Location particleLoc = entityLoc.clone().add(xOffset-0.5, yOffset+0.8, zOffset-0.5);
-
             entity.getWorld().spawnParticle(Particle.SNOWFLAKE, particleLoc, 1);
         }
 
         sendMsg(player, "&aUsing the Ice Aspect enchant!");
     }
-}
+    public void wingardiumLeviosa(EntityDamageByEntityEvent e) {
+        double trigger = ThreadLocalRandom.current().nextDouble() * 100;
+        double trigger_chance = itemInHand.getEnchantmentLevel(CustomEnchants.WINGARDIUMLEVIOSA) * 5;
+
+        if(trigger <= trigger_chance) {
+            ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
+                        1 * 4, 0, true, true));
+                player.playSound(player.getLocation(), "minecraft:custom.winggardiumleviosa", SoundCategory.MASTER, 100, 1);
+                sendMsg(player, "&aUsing the Wingardium Leviosa enchant!");
+            }
+        }
+    }

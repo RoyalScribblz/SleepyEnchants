@@ -54,6 +54,9 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("bomberace")) {
             giveEnchantedItem(Material.ELYTRA, CustomEnchants.BOMBERACE, ChatColor.GOLD, level, true);
         }
+        if (enchantName.equalsIgnoreCase("wingardiumleviosa")) {
+            giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.WINGARDIUMLEVIOSA, ChatColor.GREEN, level, true);
+        }
         if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
@@ -105,6 +108,21 @@ public class GiveEnchanted implements CommandExecutor {
                 break;
             case 5:
                 lore.add(colour + name + " V");
+                break;
+            case 6:
+                lore.add(colour + name + " VI");
+                break;
+            case 7:
+                lore.add(colour + name + " VII");
+                break;
+            case 8:
+                lore.add(colour + name + " VIII");
+                break;
+            case 9:
+                lore.add(colour + name + " IX");
+                break;
+            case 10:
+                lore.add(colour + name + " X");
                 break;
         }
         meta.setLore(lore);
