@@ -4,17 +4,13 @@ import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.enchants.EnchantmentWrapper;
 import me.jameslloyd.sleepyenchants.utils.ApplyEnchant;
 import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.UUID;
+import org.bukkit.inventory.ItemStack;
 
 public class CustomEnchant implements CommandExecutor {
 
@@ -33,59 +29,16 @@ public class CustomEnchant implements CommandExecutor {
 
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        boolean success = false;
-        switch (enchantName.toLowerCase()) {
-            case "swordsdance":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.SWORDSDANCE, level);
-                break;
-            case "dragondance":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.DRAGONDANCE, level);
-                break;
-            case "bladebeam":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.BLADEBEAM, level);
-                break;
-            case "spinattack":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.SPINATTACK, level);
-                break;
-            case "excalibur":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.EXCALIBUR, level);
-                break;
-            case "devilsscythe":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.DEVILSSCYTHE, level);
-                break;
-            case "iceaspect":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.ICEASPECT, level);
-                break;
-            case "bomberace":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.BOMBERACE, level);
-                break;
-            case "wingardiumleviosa":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.WINGARDIUMLEVIOSA, level);
-                break;
-            case "dash":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.DASH, level);
-                break;
-            case "sheercold":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.SHEERCOLD, level);
-                break;
-            case "urbosasfury":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.URBOSASFURY, level);
-                break;
-            case "swiftblade":
-                success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) CustomEnchants.SWIFTBLADE, level);
-                double additionalSpeed = item.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 0.5;
-                ItemMeta meta = item.getItemMeta();
-                meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-                        new AttributeModifier(UUID.randomUUID(), "attackSpeed", additionalSpeed, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
-                item.setItemMeta(meta);
-                break;
-        }
+        Enchantment enchant = CustomEnchants.getEnchant(enchantName);
+        if (enchant == null) return false;
+
+        boolean success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) enchant, level);
 
         if (success) {
-            sendMsg(player, "&aSuccessfully applied" + enchantName);
+            sendMsg(player, "&aSuccessfully applied " + enchant.getName() + "!");
             return true;
         } else {
-            sendMsg(player, "&cSomething went wrong, please try again.");
+            sendMsg(player, "&cYou cannot apply this enchantment!");
             return false;
         }
     }

@@ -5,9 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.getServer;
@@ -54,6 +52,9 @@ public class CustomEnchants {
     public static final Enchantment WINGARDIUMLEVIOSA = new EnchantmentWrapper("wingardiumleviosa", "Wingardium Leviosa", 3, SWORDS, COMMON);
     public static final Enchantment SHEERCOLD = new EnchantmentWrapper("sheercold", "Sheer Cold", 2, BOW, COMMON);
 
+    // map of namespaces and enchants
+    private static final HashMap<String, Enchantment> ENCHANT_KEYS = new HashMap<String, Enchantment>();
+
     public static void register() {
         // register each enchant in this array
         for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
@@ -76,7 +77,16 @@ public class CustomEnchants {
         }
 
         if (registered) {
+            ENCHANT_KEYS.put(String.valueOf(enchantment.getKey()).substring(10), enchantment);
             getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully registered the " + enchantment.getName() + " enchantment"));
         }
+    }
+
+    public static Enchantment getEnchant(String s) {
+        return ENCHANT_KEYS.get(s);
+    }
+
+    public static Set<String> getPossibleKeys() {
+        return ENCHANT_KEYS.keySet();
     }
 }

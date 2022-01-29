@@ -1,13 +1,18 @@
 package me.jameslloyd.sleepyenchants.utils;
 
+import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.enchants.EnchantmentWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ApplyEnchant {
 
@@ -64,6 +69,14 @@ public class ApplyEnchant {
         }
         meta.setLore(lore);
         item.setItemMeta(meta);
+
+        // special cases
+        if (enchant == CustomEnchants.SWIFTBLADE) {
+            double additionalSpeed = item.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 0.5;
+            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+                    new AttributeModifier(UUID.randomUUID(), "attackSpeed", additionalSpeed, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
+            item.setItemMeta(meta);
+        }
 
         return true;
     }

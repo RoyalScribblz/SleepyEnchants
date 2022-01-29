@@ -1,6 +1,7 @@
 package me.jameslloyd.sleepyenchants;
 
 import me.jameslloyd.sleepyenchants.commands.CustomEnchant;
+import me.jameslloyd.sleepyenchants.commands.CustomEnchantTabComplete;
 import me.jameslloyd.sleepyenchants.commands.GiveEnchanted;
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.events.*;
@@ -24,6 +25,7 @@ public final class SleepyEnchants extends JavaPlugin {
 
         getCommand("ge").setExecutor(new GiveEnchanted());
         getCommand("ce").setExecutor(new CustomEnchant());
+        getCommand("ce").setTabCompleter(new CustomEnchantTabComplete());
 
         pluginManager.registerEvents(new PlayerInteract(), this);
         pluginManager.registerEvents(new Quit(), this);
