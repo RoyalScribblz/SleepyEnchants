@@ -46,7 +46,7 @@ public class EntityShootBow implements Listener {
             public void run() {
                 // find the highest water block
                 Block block = projectile.getLocation().getBlock();
-                while (block.getRelative(BlockFace.UP).getType() == Material.WATER) {
+                while (block.getRelative(BlockFace.UP).getType() == Material.WATER || block.getRelative(BlockFace.UP).getType() == Material.LAVA) {
                     block = block.getRelative(BlockFace.UP);
                 }
 
@@ -76,6 +76,38 @@ public class EntityShootBow implements Listener {
                     Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
                         for (Block b: blocksInRadius) {
                             b.setType(Material.WATER);
+                        }
+                    }, 20*20);
+
+                    Bukkit.getScheduler().cancelTask(sheerColdTaskID);
+                }
+                // when the arrow touches lava
+                //TODO Optimize this part instead of copying and pasting lol
+                if (block.getType() == Material.LAVA) {
+
+                    // get all blocks in 5 radius
+                    HashSet<Block> blocksInRadius = new HashSet<Block>();
+                    blocksInRadius.add(block);
+                    for(int x = -RADIUS; x <= RADIUS; x++) {
+                        for(int z = -RADIUS; z <= RADIUS; z++) {
+                            Block b = block.getRelative(x, 0, z);
+                            if(block.getLocation().distance(b.getLocation()) <= RADIUS) {
+                                if (b.getType() == Material.LAVA) {  // only add water blocks
+                                    blocksInRadius.add(b);
+                                }
+                            }
+                        }
+                    }
+
+                    // set them all to cobblestone
+                    for (Block b: blocksInRadius) {
+                        b.setType(Material.COBBLESTONE);
+                    }
+
+                    // put the cobblestone back to lava after certain amount of seconds
+                    Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+                        for (Block b: blocksInRadius) {
+                            b.setType(Material.LAVA);
                         }
                     }, 20*20);
 
