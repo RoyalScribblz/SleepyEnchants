@@ -294,7 +294,9 @@ public class PlayerInteract implements Listener {
         dashCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
         itemInHand = player.getInventory().getItemInMainHand();
         double dist = 1.25 * itemInHand.getEnchantmentLevel(CustomEnchants.DASH);
+        player.playSound(player.getLocation(), "minecraft:custom.dash", SoundCategory.MASTER, 100, 1);
         player.setVelocity(player.getLocation().getDirection().multiply(dist));
         sendMsg(player, "&aYou used the Dash ability!");
+
     }
 }
