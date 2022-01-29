@@ -8,3 +8,6 @@ description: Custom Enchants Plugin
 commands:
   ge:
     description: Give an enchanted item
+
+  ce:
+    description: Custom Enchant an item

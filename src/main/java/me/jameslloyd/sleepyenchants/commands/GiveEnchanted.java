@@ -1,6 +1,8 @@
 package me.jameslloyd.sleepyenchants.commands;
 
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
+import me.jameslloyd.sleepyenchants.enchants.EnchantmentWrapper;
+import me.jameslloyd.sleepyenchants.utils.ApplyEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
