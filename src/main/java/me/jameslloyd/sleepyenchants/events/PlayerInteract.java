@@ -50,7 +50,39 @@ public class PlayerInteract implements Listener {
             if (itemInHand.containsEnchantment(CustomEnchants.DASH)) dash();
             if (itemInHand.containsEnchantment(CustomEnchants.EXCALIBUR)) excalibur();
             if (itemInHand.containsEnchantment(CustomEnchants.DRAGONDANCE)) dragonDance();
+            if (itemInHand.containsEnchantment(CustomEnchants.HASTYMINER)) hastyMiner();
+            if (itemInHand.containsEnchantment(CustomEnchants.BELLYDRUM)) bellyDrum();
         }
+    }
+
+    Map<String, Long> hmCooldowns = new HashMap<String, Long>();
+    public void hastyMiner() {
+        String playerName = player.getName();
+        if (hmCooldowns.containsKey(player.getName())) {
+            if (hmCooldowns.get(playerName) > System.currentTimeMillis()) {
+                long timeLeft = (hmCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                return;
+            }
+        }
+        int coolDownTime = 200 - ((itemInHand.getEnchantmentLevel(CustomEnchants.HASTYMINER)-1) * 10);
+        ddCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
+
+        // particles
+        ParticleData particle = new ParticleData(player.getUniqueId());
+        if (particle.hasID()) {
+            particle.endTask();
+            particle.removeID();
+        }
+        Effects effects = new Effects(player);
+        effects.startTotem(Particle.WAX_ON);
+        Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+            particle.endTask();
+            particle.removeID();
+        }, 60*20);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 60*20, 1, true, false));
+        player.playSound(player.getLocation(), "minecraft:custom.hastyminer", SoundCategory.MASTER, 100, 1);
+        sendMsg(player, "&aUsing the Hasty Miner enchant!");
     }
 
     Map<String, Long> ddCooldowns = new HashMap<String, Long>();
@@ -161,6 +193,42 @@ public class PlayerInteract implements Listener {
         sendMsg(player, "&aUsing the Swords Dance enchant!");
     }
 
+    Map<String, Long> bdCooldowns = new HashMap<String, Long>();
+    public void bellyDrum() {
+        if (player.getHealth() >= 10.5) { //half a heart above 50% HP
+            String playerName = player.getName();
+            if (bdCooldowns.containsKey(player.getName())) {
+                if (bdCooldowns.get(playerName) > System.currentTimeMillis()) {
+                    long timeLeft = (bdCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                    sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                    return;
+                }
+            }
+
+                int coolDownTime = 350 - ((itemInHand.getEnchantmentLevel(CustomEnchants.BELLYDRUM)-1) * 10);
+                bdCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
+
+                // particles
+                ParticleData particle = new ParticleData(player.getUniqueId());
+                if (particle.hasID()) {
+                    particle.endTask();
+                    particle.removeID();
+                }
+                Effects effects = new Effects(player);
+                effects.startTotem(Particle.DAMAGE_INDICATOR);
+                Bukkit.getServer().getScheduler().runTaskLater(SleepyEnchants.getPlugin(SleepyEnchants.class), () -> {
+                    particle.endTask();
+                    particle.removeID();
+                }, 60 * 20);
+            player.setHealth(player.getHealth() - 10);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60 * 20, 5, true, false));
+            player.playSound(player.getLocation(), "minecraft:custom.bellydrum", SoundCategory.MASTER, 100, 1);
+            sendMsg(player, "&aUsing the Belly Drum enchant!");
+        } else {
+            sendMsg(player, "&cYou must be above half HP to use Belly Drum!");
+        }
+    }
+
     public void bladeBeam() {
         if (player.getHealth() >= 19.5) {  // full hp
             World world = player.getWorld();
@@ -248,7 +316,7 @@ public class PlayerInteract implements Listener {
         // Urbosa's Fury code
         if (itemInHand == null) return;
         if (!itemInHand.hasItemMeta()) return;
-        if (!itemInHand.containsEnchantment(CustomEnchants.URBOSASFURY)) return;
+        if (!itemInHand.getItemMeta().hasEnchant(CustomEnchants.URBOSASFURY)) return;
 
         Block stoodBlock = location.getBlock().getRelative(BlockFace.DOWN);
 

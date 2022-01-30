@@ -31,7 +31,7 @@ public class CustomEnchant implements CommandExecutor {
 
         Enchantment enchant = CustomEnchants.getEnchant(enchantName);
         if (enchant == null) return false;
-
+        //TODO Prevent duplicates of the same enchantment
         boolean success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) enchant, level);
 
         if (success) {

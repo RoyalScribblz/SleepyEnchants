@@ -59,6 +59,12 @@ public class GiveEnchanted implements CommandExecutor {
         if (enchantName.equalsIgnoreCase("wingardiumleviosa")) {
             giveEnchantedItem(Material.DIAMOND_SWORD, CustomEnchants.WINGARDIUMLEVIOSA, ChatColor.GREEN, level, true);
         }
+        if (enchantName.equalsIgnoreCase("hastyminer")) {
+            giveEnchantedItem(Material.DIAMOND_PICKAXE, CustomEnchants.HASTYMINER, ChatColor.GREEN, level, true);
+        }
+        if (enchantName.equalsIgnoreCase("bellydrum")) {
+            giveEnchantedItem(Material.DIAMOND_AXE, CustomEnchants.BELLYDRUM, ChatColor.GOLD, level, true);
+        }
         if (enchantName.equalsIgnoreCase("urbosasfury")) {  // TODO don't be lazy and optimise this
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
             item.addUnsafeEnchantment(CustomEnchants.SPINATTACK, level);
