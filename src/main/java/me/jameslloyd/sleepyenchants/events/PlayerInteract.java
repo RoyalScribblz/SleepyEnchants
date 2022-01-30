@@ -42,14 +42,14 @@ public class PlayerInteract implements Listener {
         if (!itemInHand.hasItemMeta()) return;
 
         if ((action == Action.LEFT_CLICK_AIR) || (action == Action.LEFT_CLICK_BLOCK)) {
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.BLADEBEAM)) bladeBeam();
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SPINATTACK)) spinAttack();
+            if (itemInHand.containsEnchantment(CustomEnchants.BLADEBEAM)) bladeBeam();
+            if (itemInHand.containsEnchantment(CustomEnchants.SPINATTACK)) spinAttack();
         }
         if ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK)) {
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SWORDSDANCE)) swordsDance();
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DASH)) dash();
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.EXCALIBUR)) excalibur();
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DRAGONDANCE)) dragonDance();
+            if (itemInHand.containsEnchantment(CustomEnchants.SWORDSDANCE)) swordsDance();
+            if (itemInHand.containsEnchantment(CustomEnchants.DASH)) dash();
+            if (itemInHand.containsEnchantment(CustomEnchants.EXCALIBUR)) excalibur();
+            if (itemInHand.containsEnchantment(CustomEnchants.DRAGONDANCE)) dragonDance();
         }
     }
 
@@ -248,7 +248,7 @@ public class PlayerInteract implements Listener {
         // Urbosa's Fury code
         if (itemInHand == null) return;
         if (!itemInHand.hasItemMeta()) return;
-        if (!itemInHand.getItemMeta().hasEnchant(CustomEnchants.URBOSASFURY)) return;
+        if (!itemInHand.containsEnchantment(CustomEnchants.URBOSASFURY)) return;
 
         Block stoodBlock = location.getBlock().getRelative(BlockFace.DOWN);
 

@@ -36,7 +36,7 @@ public class PlayerShift implements Listener {
         Armor = player.getInventory().getChestplate();
         if (Armor == null) return;
         if (!Armor.hasItemMeta()) return;
-        if (Armor.getItemMeta().hasEnchant(CustomEnchants.BOMBERACE)) bomberAce();
+        if (Armor.containsEnchantment(CustomEnchants.BOMBERACE)) bomberAce();
 
     }
 

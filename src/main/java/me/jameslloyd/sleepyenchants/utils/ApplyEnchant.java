@@ -18,14 +18,24 @@ public class ApplyEnchant {
 
     public static boolean applyEnchant(ItemStack item, EnchantmentWrapper enchant, int level) {
 
-        // check compatible, if not, don't modify
+        // check compatible, if not, don't modify, size 0 means compatible with all
         List<Material> compatibleMaterials = enchant.getMaterials();
-        if (!compatibleMaterials.contains(item.getType())) return false;
+        if (!(compatibleMaterials.contains(item.getType()) || compatibleMaterials.size() == 0)) return false;
 
         // check level doesn't supersede max level
         if (level > enchant.getMaxLevel()) level = enchant.getMaxLevel();
 
-        item.addUnsafeEnchantment(enchant, level);
+        if (item.containsEnchantment(enchant)) {
+            if (level != 0 && item.getEnchantmentLevel(enchant) >= level) {  // if zero we remove the enchantment
+                return false;  // don't continue if already higher unless 0
+            }
+        }
+
+        if (level == 0) {  // remove if 0
+            item.removeEnchantment(enchant);
+        } else {  //
+            item.addUnsafeEnchantment(enchant, level);
+        }
         String name = enchant.getName();
         ChatColor colour = enchant.getColour();
 
@@ -34,8 +44,12 @@ public class ApplyEnchant {
         List<String> lore = new ArrayList<>();
         if (meta.hasLore()) lore = meta.getLore(); // get lore if preexisting
 
+        lore.removeIf(l -> l.startsWith(colour + name));  // remove old lore of this enchant
+
         // insert new lore at the start to prevent going after non-enchant lore
         switch (level) {
+            case 0:
+                break;  // don't add since its removed
             case 1:
                 lore.add(0, colour + name + " I");
                 break;

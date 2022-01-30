@@ -37,7 +37,7 @@ public class PlayerToggleSneak implements Listener {
         itemInHand = player.getInventory().getItemInMainHand();
         if (itemInHand == null) return;
         if (!itemInHand.hasItemMeta()) return;
-        if (!itemInHand.getItemMeta().hasEnchant(CustomEnchants.SPINATTACK)) return;
+        if (!itemInHand.containsEnchantment(CustomEnchants.SPINATTACK)) return;
 
         if (e.isSneaking()) {
             taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(SleepyEnchants.getPlugin(SleepyEnchants.class), new Runnable() {

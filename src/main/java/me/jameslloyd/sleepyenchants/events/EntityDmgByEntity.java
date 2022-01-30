@@ -38,10 +38,10 @@ public class EntityDmgByEntity implements Listener {
             itemInHand = player.getInventory().getItemInMainHand();
             if (itemInHand == null) return;
             if (!itemInHand.hasItemMeta()) return;
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.DEVILSSCYTHE)) devilsScythe(e);
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.ICEASPECT)) iceAspect(e);
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.WINGARDIUMLEVIOSA)) wingardiumLeviosa(e);
-            if (itemInHand.getItemMeta().hasEnchant(CustomEnchants.SHEERCOLD)) sheerCold(e);
+            if (itemInHand.containsEnchantment(CustomEnchants.DEVILSSCYTHE)) devilsScythe(e);
+            if (itemInHand.containsEnchantment(CustomEnchants.ICEASPECT)) iceAspect(e);
+            if (itemInHand.containsEnchantment(CustomEnchants.WINGARDIUMLEVIOSA)) wingardiumLeviosa(e);
+            if (itemInHand.containsEnchantment(CustomEnchants.SHEERCOLD)) sheerCold(e);
         }
     }
 

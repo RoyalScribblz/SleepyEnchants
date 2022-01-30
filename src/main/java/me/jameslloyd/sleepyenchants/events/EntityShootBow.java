@@ -34,7 +34,7 @@ public class EntityShootBow implements Listener {
 
         if (!bow.hasItemMeta()) return;
 
-        if (bow.getItemMeta().hasEnchant(CustomEnchants.SHEERCOLD)) sheerCold(e);
+        if (bow.containsEnchantment(CustomEnchants.SHEERCOLD)) sheerCold(e);
     }
 
     int sheerColdTaskID;
