@@ -24,6 +24,7 @@ public class PrepareAnvil implements Listener {
         ItemStack item2 = inventory.getItem(1);
         ItemStack result = e.getResult();
 
+        // check a combination is possible
         if (item1 == null || item2 == null) return;
         if (result == null) {
             if (item1.getType() == item2.getType()) result = new ItemStack(item1.getType());
@@ -31,6 +32,7 @@ public class PrepareAnvil implements Listener {
 
         if (result == null) return;
 
+        // loop each enchant and add it to a map, if it's already there update the number to the larger one or level up
         Map<Enchantment, Integer> enchantsToApply = new HashMap<Enchantment, Integer>();
         Set<Enchantment> all = CustomEnchants.getAll();
         for (Enchantment enchant : all) {
@@ -53,8 +55,10 @@ public class PrepareAnvil implements Listener {
             }
         }
 
+        // no enchants to apply
         if (enchantsToApply.size() == 0) return;
 
+        // apply each enchant
         for (Enchantment enchant : enchantsToApply.keySet()) {
             ApplyEnchant.applyEnchant(result, (EnchantmentWrapper) enchant, enchantsToApply.get(enchant));
         }
