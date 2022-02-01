@@ -59,6 +59,8 @@ public class CustomEnchants {
 
     // map of namespaces and enchants
     private static final HashMap<String, Enchantment> ENCHANT_KEYS = new HashMap<String, Enchantment>();
+    // set of all possible enchants
+    private static final Set<Enchantment> ALL = new HashSet<>();
 
     public static void register() {
         // register each enchant in this array
@@ -83,6 +85,7 @@ public class CustomEnchants {
 
         if (registered) {
             ENCHANT_KEYS.put(String.valueOf(enchantment.getKey()).substring(10), enchantment);
+            ALL.add(enchantment);
             getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully registered the " + enchantment.getName() + " enchantment"));
         }
     }
@@ -94,4 +97,6 @@ public class CustomEnchants {
     public static Set<String> getPossibleKeys() {
         return ENCHANT_KEYS.keySet();
     }
+
+    public static Set<Enchantment> getAll() {return ALL;}
 }
