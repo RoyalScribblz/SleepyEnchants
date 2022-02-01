@@ -21,6 +21,7 @@ public class CustomEnchants {
     // compatible material sets
     private static final List<Material> SWORDS = Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD);
     private static final List<Material> AXES = Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
+    private static final List<Material> MELEE = Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE, Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD);
     private static final List<Material> PICKAXES = Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE);
     private static final List<Material> SHIELD = Collections.singletonList(Material.SHIELD);
     private static final List<Material> BOW = Collections.singletonList(Material.BOW);
@@ -47,12 +48,14 @@ public class CustomEnchants {
     public static final Enchantment DEVILSSCYTHE = new EnchantmentWrapper("devilsscythe", "Devil's Scythe", 5, SWORDS, RARE);
     public static final Enchantment SWIFTBLADE = new EnchantmentWrapper("swiftblade", "Swift Blade", 5, SWORDS, RARE);
     public static final Enchantment ICEASPECT = new EnchantmentWrapper("iceaspect", "Ice Aspect", 2, SWORDS, RARE);
-    public static final Enchantment BOMBERACE = new EnchantmentWrapper("bomberace", "Bomber Ace", 3, ELYTRA, COMMON);
+    public static final Enchantment BOMBERACE = new EnchantmentWrapper("bomberace", "Bomber Ace", 3, ELYTRA, RARE);
     public static final Enchantment DRAGONDANCE = new EnchantmentWrapper("dragondance", "Dragon Dance", 5, AXES, EXOTIC);
     public static final Enchantment WINGARDIUMLEVIOSA = new EnchantmentWrapper("wingardiumleviosa", "Wingardium Leviosa", 3, SWORDS, COMMON);
-    public static final Enchantment SHEERCOLD = new EnchantmentWrapper("sheercold", "Sheer Cold", 2, BOW, COMMON);
+    public static final Enchantment SHEERCOLD = new EnchantmentWrapper("sheercold", "Sheer Cold", 2, BOW, EXOTIC);
     public static final Enchantment HASTYMINER = new EnchantmentWrapper("hastyminer", "Hasty Miner", 5, PICKAXES, RARE);
     public static final Enchantment BELLYDRUM = new EnchantmentWrapper("bellydrum", "Belly Drum", 5, AXES, EXOTIC);
+    public static final Enchantment CUTCLEAN = new EnchantmentWrapper("cutclean", "Cut Clean", 5, PICKAXES, COMMON);
+
 
     // map of namespaces and enchants
     private static final HashMap<String, Enchantment> ENCHANT_KEYS = new HashMap<String, Enchantment>();
@@ -60,7 +63,7 @@ public class CustomEnchants {
     public static void register() {
         // register each enchant in this array
         for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
-                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD, HASTYMINER, BELLYDRUM}) {
+                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD, HASTYMINER, BELLYDRUM, CUTCLEAN}) {
             boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchant);
             if (!registered) registerEnchantment(enchant);
         }

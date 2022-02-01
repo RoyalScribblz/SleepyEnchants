@@ -33,6 +33,8 @@ public final class SleepyEnchants extends JavaPlugin {
         pluginManager.registerEvents(new EntityDmgByEntity(), this);
         pluginManager.registerEvents(new PlayerShift(), this);
         pluginManager.registerEvents(new EntityShootBow(), this);
+        pluginManager.registerEvents(new BlockBreak(), this);
+
 
         log("&a[SleepyEnchants] has started up successfully!");
     }

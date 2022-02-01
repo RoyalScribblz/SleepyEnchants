@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -57,5 +58,6 @@ public class PlayerShift implements Listener {
         TNT = (TNTPrimed)player.getWorld().spawnEntity(player.getLocation(), EntityType.PRIMED_TNT);
         TNT.setFuseTicks(50);
         sendMsg(player, "&aUsing the Bomber Ace enchant!");
+        player.playSound(player.getLocation(), "minecraft:custom.bomberace", SoundCategory.MASTER, 100, 1);
     }
 }
