@@ -26,9 +26,7 @@ public class EntityDeath implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Player) {
-            return;
-        }
+
 
         EntityDamageEvent e = event.getEntity().getLastDamageCause();
         if (!(e instanceof EntityDamageByEntityEvent)) {
@@ -47,6 +45,7 @@ public class EntityDeath implements Listener {
     }
 
     public void potLuck(EntityDeathEvent e){
+        if (e.getEntity() instanceof Player) return;
         for (ItemStack item : e.getDrops()){
             Iterator<Recipe> iter = Bukkit.recipeIterator();
             while (iter.hasNext()) {
