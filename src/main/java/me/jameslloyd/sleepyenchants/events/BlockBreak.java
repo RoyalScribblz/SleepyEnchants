@@ -33,7 +33,7 @@ public class BlockBreak implements Listener{
     ItemStack Drops;
     Player player;
     Block block;
-    ItemStack result;
+    ItemStack result = null;
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -47,7 +47,6 @@ public class BlockBreak implements Listener{
 
     public void cutClean(BlockBreakEvent e){
         block = e.getBlock();
-        //int dropnumber = e.getBlock().getDrops(itemInHand).size();
         int dropnumber = 0;
         for (ItemStack item : block.getDrops(itemInHand)){
             Iterator<Recipe> iter = Bukkit.recipeIterator();
@@ -61,7 +60,7 @@ public class BlockBreak implements Listener{
             }
         }
         //TODO Optimize this
-
+        if(result == null) return;
         if (result.getType() == Material.IRON_INGOT || result.getType() == Material.GOLD_INGOT || result.getType() == Material.NETHERITE_SCRAP) {
             result.setAmount(dropnumber);
             block.setType(Material.AIR);
