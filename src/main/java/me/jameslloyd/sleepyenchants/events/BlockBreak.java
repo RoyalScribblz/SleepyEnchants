@@ -16,11 +16,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-
+import org.bukkit.inventory.Recipe;
+import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockBreak implements Listener{
@@ -31,6 +33,7 @@ public class BlockBreak implements Listener{
     ItemStack Drops;
     Player player;
     Block block;
+    ItemStack result;
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -47,29 +50,24 @@ public class BlockBreak implements Listener{
         //int dropnumber = e.getBlock().getDrops(itemInHand).size();
         int dropnumber = 0;
         for (ItemStack item : block.getDrops(itemInHand)){
-            if (item.getType() == Material.RAW_IRON || item.getType() == Material.RAW_GOLD || item.getType() == Material.RAW_COPPER){
+            Iterator<Recipe> iter = Bukkit.recipeIterator();
+            while (iter.hasNext()) {
+                Recipe recipe = iter.next();
+                if (!(recipe instanceof FurnaceRecipe)) continue;
+                if (((FurnaceRecipe) recipe).getInput().getType() != item.getType()) continue;
+                result = recipe.getResult();
                 dropnumber += item.getAmount();
+                break;
             }
         }
         //TODO Optimize this
-        if (block.getType() == Material.IRON_ORE || block.getType() == Material.DEEPSLATE_IRON_ORE) {
-            block.setType(Material.AIR);
-            block.getState().update();
-            ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
-            block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.IRON_INGOT, dropnumber));
-        }
 
-        if (block.getType() == Material.GOLD_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE) {
+        if (result.getType() == Material.IRON_INGOT || result.getType() == Material.GOLD_INGOT || result.getType() == Material.NETHERITE_SCRAP) {
+            result.setAmount(dropnumber);
             block.setType(Material.AIR);
             block.getState().update();
-            ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
-            block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.GOLD_INGOT, dropnumber));
-        }
-        if (block.getType() == Material.COPPER_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE) {
-            block.setType(Material.AIR);
-            block.getState().update();
-            ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
-            block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.COPPER_INGOT, dropnumber));
+            ((ExperienceOrb) block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
+            block.getWorld().dropItemNaturally(block.getLocation(), result);
         }
     }
 }
