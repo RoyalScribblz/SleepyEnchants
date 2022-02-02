@@ -8,14 +8,17 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class EntityShootBow implements Listener {
@@ -23,9 +26,9 @@ public class EntityShootBow implements Listener {
     private void sendMsg(CommandSender sender, String msg) {
         sender.sendMessage((ChatColor.translateAlternateColorCodes('&', msg)));
     }
-
     Entity projectile;
     ItemStack bow;
+    Player player;
 
     @EventHandler
     public void onShootBow(EntityShootBowEvent e) {
@@ -35,6 +38,27 @@ public class EntityShootBow implements Listener {
         if (!bow.hasItemMeta()) return;
 
         if (bow.containsEnchantment(CustomEnchants.SHEERCOLD)) sheerCold(e);
+        if (bow.containsEnchantment(CustomEnchants.DRAGONSBREATH)) dragonsBreath(e);
+    }
+
+    Map<String, Long> dBCooldowns = new HashMap<String, Long>();
+    public void dragonsBreath(EntityShootBowEvent e){
+        Entity damager = e.getEntity();
+        if(!(damager instanceof Player)) return;
+        player = (Player)damager;
+        String playerName = player.getName();
+        if (dBCooldowns.containsKey(player.getName())) {
+            if (dBCooldowns.get(playerName) > System.currentTimeMillis()) {
+                long timeLeft = (dBCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                return;
+            }
+        }
+        int coolDownTime = 10;
+        dBCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
+        DragonFireball dragonfireball = (DragonFireball) player.launchProjectile(DragonFireball.class, projectile.getVelocity());
+        projectile.remove();
+        dragonfireball.setShooter((ProjectileSource)player);
     }
 
     int sheerColdTaskID;
