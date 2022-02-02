@@ -57,6 +57,7 @@ public class CustomEnchants {
     public static final Enchantment HASTYMINER = new EnchantmentWrapper("hastyminer", "Hasty Miner", 5, PICKAXES, RARE);
     public static final Enchantment BELLYDRUM = new EnchantmentWrapper("bellydrum", "Belly Drum", 5, AXES, EXOTIC);
     public static final Enchantment CUTCLEAN = new EnchantmentWrapper("cutclean", "Cut Clean", 1, PICKAXES, COMMON);
+    public static final Enchantment POTLUCK = new EnchantmentWrapper("potluck", "Potluck", 1, SWORDS, COMMON);
 
 
     // map of namespaces and enchants
@@ -67,7 +68,7 @@ public class CustomEnchants {
     public static void register() {
         // register each enchant in this array
         for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
-                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD, HASTYMINER, BELLYDRUM, CUTCLEAN}) {
+                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD, HASTYMINER, BELLYDRUM, CUTCLEAN, POTLUCK}) {
             boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchant);
             if (!registered) registerEnchantment(enchant);
         }
