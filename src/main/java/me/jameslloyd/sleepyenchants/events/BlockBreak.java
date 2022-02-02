@@ -45,24 +45,30 @@ public class BlockBreak implements Listener{
     public void cutClean(BlockBreakEvent e){
         block = e.getBlock();
         //int dropnumber = e.getBlock().getDrops(itemInHand).size();
-        int dropnumber = 1;
-        double trigger_chance;
-        for (ItemStack item : block.getDrops()){
-            if (item.getType() == Material.RAW_IRON){
+        int dropnumber = 0;
+        for (ItemStack item : block.getDrops(itemInHand)){
+            if (item.getType() == Material.RAW_IRON || item.getType() == Material.RAW_GOLD || item.getType() == Material.RAW_COPPER){
                 dropnumber += item.getAmount();
             }
         }
+        //TODO Optimize this
         if (block.getType() == Material.IRON_ORE || block.getType() == Material.DEEPSLATE_IRON_ORE) {
-            e.setDropItems(false);
+            block.setType(Material.AIR);
+            block.getState().update();
+            ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
             block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.IRON_INGOT, dropnumber));
         }
 
         if (block.getType() == Material.GOLD_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE) {
-            e.setDropItems(false);
+            block.setType(Material.AIR);
+            block.getState().update();
+            ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
             block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.GOLD_INGOT, dropnumber));
         }
         if (block.getType() == Material.COPPER_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE) {
-            e.setDropItems(false);
+            block.setType(Material.AIR);
+            block.getState().update();
+            ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(1);
             block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.COPPER_INGOT, dropnumber));
         }
     }
