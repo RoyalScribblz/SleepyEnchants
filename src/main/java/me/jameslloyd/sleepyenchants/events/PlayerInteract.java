@@ -57,11 +57,11 @@ public class PlayerInteract implements Listener {
             if (itemInHand.containsEnchantment(CustomEnchants.AXETHROW)) axeThrow();
         }
     }
-    public static Map<String, ItemStack> thrownItem = new HashMap<>();
+    public static Map<UUID, ItemStack> thrownItem = new HashMap<>();
     public void axeThrow(){
-        String playerName = player.getName();
+        UUID uuid = player.getUniqueId();
         final double attackDamage = player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue();
-        thrownItem.put(playerName, itemInHand);
+        thrownItem.put(uuid, itemInHand.clone());
 
         ArmorStand as = (ArmorStand) player.getWorld().spawnEntity(player.getLocation().add(0, 0.5, 0), EntityType.ARMOR_STAND);
         as.setArms(true);
@@ -92,11 +92,13 @@ public class PlayerInteract implements Listener {
                     if (!as.isDead()) {
                         as.remove();
                         if (player.getInventory().firstEmpty() != -1) {
-                            player.getInventory().addItem(thrownItem.get(playerName));
-                            thrownItem.remove(playerName);
+                            if (!(thrownItem.get(uuid)== null))sendMsg(player, "&aReturning Axe!");
+                            player.getInventory().addItem(thrownItem.get(uuid));
+                            thrownItem.remove(uuid);
                         } else {
-                            player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(playerName));
-                            thrownItem.remove(playerName);
+                            if (!(thrownItem.get(uuid)== null))sendMsg(player, "&aReturning Axe!");
+                            player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(uuid));
+                            thrownItem.remove(uuid);
                         }
                         cancel();
                     }
@@ -110,11 +112,13 @@ public class PlayerInteract implements Listener {
                                     livingentity.damage(attackDamage, player);
                                     as.remove();
                                     if(player.getInventory().firstEmpty() != -1){
-                                        player.getInventory().addItem(thrownItem.get(playerName));
-                                        thrownItem.remove(playerName);
+                                        if (!(thrownItem.get(uuid)== null))sendMsg(player, "&aReturning Axe!");
+                                        player.getInventory().addItem(thrownItem.get(uuid));
+                                        thrownItem.remove(uuid);
                                     } else{
-                                        player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(playerName));
-                                        thrownItem.remove(playerName);
+                                        if (!(thrownItem.get(uuid)== null))sendMsg(player, "&aReturning Axe!");
+                                        player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(uuid));
+                                        thrownItem.remove(uuid);
                                     }
                                     cancel();
                                 }
@@ -127,11 +131,13 @@ public class PlayerInteract implements Listener {
                     if(!as.isDead()){
                         as.remove();
                         if(player.getInventory().firstEmpty() != -1){
-                            player.getInventory().addItem(thrownItem.get(playerName));
-                            thrownItem.remove(playerName);
+                            if (!(thrownItem.get(uuid)== null))sendMsg(player, "&aReturning Axe!");
+                            player.getInventory().addItem(thrownItem.get(uuid));
+                            thrownItem.remove(uuid);
                         } else{
-                            player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(playerName));
-                            thrownItem.remove(playerName);
+                            if (!(thrownItem.get(uuid)== null))sendMsg(player, "&aReturning Axe!");
+                            player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(uuid));
+                            thrownItem.remove(uuid);
                         }
                         cancel();
                     }
