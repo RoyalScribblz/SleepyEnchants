@@ -3,6 +3,7 @@ package me.jameslloyd.sleepyenchants.enchants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.checkerframework.checker.units.qual.A;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -67,14 +68,27 @@ public class CustomEnchants {
 
     // map of namespaces and enchants
     private static final HashMap<String, Enchantment> ENCHANT_KEYS = new HashMap<String, Enchantment>();
+
+    // each rarity
+    private static final List<Enchantment> COMMON_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(WINGARDIUMLEVIOSA, CUTCLEAN, POTLUCK, BOMBER));
+    private static final List<Enchantment> RARE_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, HASTYMINER, DRAGONSBREATH, WITHERSSKULL, GRAPPLINGHOOK));
+    private static final List<Enchantment> EXOTIC_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(SWORDSDANCE, SPINATTACK, DASH, DRAGONDANCE, SHEERCOLD, BELLYDRUM));
+    private static final List<Enchantment> HEROIC_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList());
+    private static final List<Enchantment> LEGENDARY_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(BLADEBEAM, URBOSASFURY, EXCALIBUR));
+
     // set of all possible enchants
-    private static final Set<Enchantment> ALL = new HashSet<>();
+    private static final List<Enchantment> ALL = new ArrayList<>();
 
     public static void register() {
-        // register each enchant in this array
-        for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
-                DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD, HASTYMINER,
-                BELLYDRUM, CUTCLEAN, POTLUCK, BOMBER, DRAGONSBREATH, WITHERSSKULL, GRAPPLINGHOOK, AXETHROW}) {
+
+        // register all enchantments in ALL after adding each rarity to it
+        ALL.addAll(COMMON_ENCHANTS);
+        ALL.addAll(RARE_ENCHANTS);
+        ALL.addAll(EXOTIC_ENCHANTS);
+        ALL.addAll(HEROIC_ENCHANTS);
+        ALL.addAll(LEGENDARY_ENCHANTS);
+
+        for (Enchantment enchant: ALL) {
             boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchant);
             if (!registered) registerEnchantment(enchant);
         }
@@ -94,7 +108,6 @@ public class CustomEnchants {
 
         if (registered) {
             ENCHANT_KEYS.put(String.valueOf(enchantment.getKey()).substring(10), enchantment);
-            ALL.add(enchantment);
             getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully registered the " + enchantment.getName() + " enchantment"));
         }
     }
@@ -107,5 +120,11 @@ public class CustomEnchants {
         return ENCHANT_KEYS.keySet();
     }
 
-    public static Set<Enchantment> getAll() {return ALL;}
+    public static List<Enchantment> getAll() {return ALL;}
+
+    public static List<Enchantment> getCommon() {return COMMON_ENCHANTS;}
+    public static List<Enchantment> getRare() {return RARE_ENCHANTS;}
+    public static List<Enchantment> getExotic() {return EXOTIC_ENCHANTS;}
+    public static List<Enchantment> getHeroic() {return HEROIC_ENCHANTS;}
+    public static List<Enchantment> getLegendary() {return LEGENDARY_ENCHANTS;}
 }

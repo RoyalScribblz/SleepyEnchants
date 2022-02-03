@@ -11,7 +11,7 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +34,7 @@ public class PrepareAnvil implements Listener {
 
         // loop each enchant and add it to a map, if it's already there update the number to the larger one or level up
         Map<Enchantment, Integer> enchantsToApply = new HashMap<Enchantment, Integer>();
-        Set<Enchantment> all = CustomEnchants.getAll();
+        List<Enchantment> all = CustomEnchants.getAll();
         for (Enchantment enchant : all) {
             if (item1.containsEnchantment(enchant)) enchantsToApply.put(enchant, item1.getEnchantmentLevel(enchant));
             if (item2.containsEnchantment(enchant)) {

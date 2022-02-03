@@ -31,6 +31,7 @@ public class EntityDmgByEntity implements Listener {
     @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e){
         Entity damager = e.getDamager();
+        if (!(damager instanceof LivingEntity)) return;
         entity = (LivingEntity) e.getEntity();
         if (damager instanceof Player) {
             player = (Player) damager;

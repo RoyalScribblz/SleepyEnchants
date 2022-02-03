@@ -11,3 +11,6 @@ commands:
 
   ce:
     description: Custom Enchant an item
+
+  enchant:
+    description: Opens enchant GUI
