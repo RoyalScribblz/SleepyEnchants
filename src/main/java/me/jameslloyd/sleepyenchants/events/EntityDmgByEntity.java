@@ -42,6 +42,8 @@ public class EntityDmgByEntity implements Listener {
             if (itemInHand.containsEnchantment(CustomEnchants.ICEASPECT)) iceAspect(e);
             if (itemInHand.containsEnchantment(CustomEnchants.WINGARDIUMLEVIOSA)) wingardiumLeviosa(e);
             if (itemInHand.containsEnchantment(CustomEnchants.SHEERCOLD)) sheerCold(e);
+            if (itemInHand.containsEnchantment(CustomEnchants.WITHERSSKULL)) withersSkull(e);
+
         }
     }
 
@@ -103,5 +105,10 @@ public class EntityDmgByEntity implements Listener {
                 20 * 4 * itemInHand.getEnchantmentLevel(CustomEnchants.SHEERCOLD),
                 2, true, false));
         System.out.println("sheerColdSLOW");
+    }
+    public void withersSkull(EntityDamageByEntityEvent e) {
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,
+                20 * 10,
+                1, true, true));
     }
 }

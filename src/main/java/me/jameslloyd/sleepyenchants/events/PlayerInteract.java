@@ -17,14 +17,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class PlayerInteract implements Listener {
-    ItemStack itemOnChest;
     ItemStack itemInHand;
     Player player;
 
@@ -52,7 +54,92 @@ public class PlayerInteract implements Listener {
             if (itemInHand.containsEnchantment(CustomEnchants.DRAGONDANCE)) dragonDance();
             if (itemInHand.containsEnchantment(CustomEnchants.HASTYMINER)) hastyMiner();
             if (itemInHand.containsEnchantment(CustomEnchants.BELLYDRUM)) bellyDrum();
+            if (itemInHand.containsEnchantment(CustomEnchants.AXETHROW)) axeThrow();
         }
+    }
+    public static Map<String, ItemStack> thrownItem = new HashMap<>();
+    public void axeThrow(){
+        String playerName = player.getName();
+        final double attackDamage = player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue();
+        thrownItem.put(playerName, itemInHand);
+
+        ArmorStand as = (ArmorStand) player.getWorld().spawnEntity(player.getLocation().add(0, 0.5, 0), EntityType.ARMOR_STAND);
+        as.setArms(true);
+        as.setGravity(false);
+        as.setVisible(false);
+        as.setSmall(true);
+        as.setMarker(true);
+        as.setItemInHand(itemInHand);
+        as.setRightArmPose(new EulerAngle(Math.toRadians(90), Math.toRadians(0), Math.toRadians(0)));
+
+        itemInHand.setAmount(itemInHand.getAmount()- 1);
+
+        Location dest = player.getLocation().add(player.getLocation().getDirection().multiply(10));
+        Vector vector = dest.subtract(player.getLocation()).toVector();
+
+        new BukkitRunnable(){
+            int distance = 30;
+            int i = 0;
+
+            public void run(){
+                EulerAngle rot = as.getRightArmPose();
+                EulerAngle rotnew = rot.add(20, 0, 0);
+                as.setRightArmPose(rotnew);
+
+                as.teleport(as.getLocation().add(vector.normalize()));
+
+                if(as.getTargetBlockExact(1) != null && as.getTargetBlockExact(1).isPassable()) {
+                    if (!as.isDead()) {
+                        as.remove();
+                        if (player.getInventory().firstEmpty() != -1) {
+                            player.getInventory().addItem(thrownItem.get(playerName));
+                            thrownItem.remove(playerName);
+                        } else {
+                            player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(playerName));
+                            thrownItem.remove(playerName);
+                        }
+                        cancel();
+                    }
+                }
+                for(Entity entity : as.getLocation().getChunk().getEntities()){
+                    if(!as.isDead()){
+                        if(as.getLocation().distanceSquared(entity.getLocation()) <= 1){
+                            if(entity != player && entity != as){
+                                if(entity instanceof LivingEntity){
+                                    LivingEntity livingentity = (LivingEntity) entity;
+                                    livingentity.damage(attackDamage, player);
+                                    as.remove();
+                                    if(player.getInventory().firstEmpty() != -1){
+                                        player.getInventory().addItem(thrownItem.get(playerName));
+                                        thrownItem.remove(playerName);
+                                    } else{
+                                        player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(playerName));
+                                        thrownItem.remove(playerName);
+                                    }
+                                    cancel();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(i > distance){
+                    if(!as.isDead()){
+                        as.remove();
+                        if(player.getInventory().firstEmpty() != -1){
+                            player.getInventory().addItem(thrownItem.get(playerName));
+                            thrownItem.remove(playerName);
+                        } else{
+                            player.getWorld().dropItemNaturally(player.getLocation(), thrownItem.get(playerName));
+                            thrownItem.remove(playerName);
+                        }
+                        cancel();
+                    }
+                }
+
+                i++;
+            }
+        }.runTaskTimer(SleepyEnchants.getPlugin(SleepyEnchants.class), 0L, 1L);
     }
 
     Map<String, Long> hmCooldowns = new HashMap<String, Long>();
@@ -66,7 +153,7 @@ public class PlayerInteract implements Listener {
             }
         }
         int coolDownTime = 200 - ((itemInHand.getEnchantmentLevel(CustomEnchants.HASTYMINER)-1) * 10);
-        ddCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
+        hmCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
 
         // particles
         ParticleData particle = new ParticleData(player.getUniqueId());

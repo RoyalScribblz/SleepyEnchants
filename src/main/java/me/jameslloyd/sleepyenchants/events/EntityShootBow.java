@@ -39,6 +39,7 @@ public class EntityShootBow implements Listener {
 
         if (bow.containsEnchantment(CustomEnchants.SHEERCOLD)) sheerCold(e);
         if (bow.containsEnchantment(CustomEnchants.DRAGONSBREATH)) dragonsBreath(e);
+        if (bow.containsEnchantment(CustomEnchants.WITHERSSKULL)) withersSkull(e);
     }
 
     Map<String, Long> dBCooldowns = new HashMap<String, Long>();
@@ -59,6 +60,26 @@ public class EntityShootBow implements Listener {
         DragonFireball dragonfireball = (DragonFireball) player.launchProjectile(DragonFireball.class, projectile.getVelocity());
         projectile.remove();
         dragonfireball.setShooter((ProjectileSource)player);
+    }
+
+    Map<String, Long> wSCooldowns = new HashMap<String, Long>();
+    public void withersSkull(EntityShootBowEvent e){
+        Entity damager = e.getEntity();
+        if(!(damager instanceof Player)) return;
+        player = (Player)damager;
+        String playerName = player.getName();
+        if (wSCooldowns.containsKey(player.getName())) {
+            if (wSCooldowns.get(playerName) > System.currentTimeMillis()) {
+                long timeLeft = (wSCooldowns.get(playerName) - System.currentTimeMillis()) / 1000;
+                sendMsg(player, "&6Ability will be ready in " + timeLeft + " second(s)");
+                return;
+            }
+        }
+        int coolDownTime = 10;
+        wSCooldowns.put(playerName, System.currentTimeMillis() + (coolDownTime * 1000L));
+        WitherSkull witherskull = (WitherSkull) player.launchProjectile(WitherSkull.class, projectile.getVelocity());
+        projectile.remove();
+        witherskull.setShooter((ProjectileSource)player);
     }
 
     int sheerColdTaskID;

@@ -37,6 +37,7 @@ public class CustomEnchants {
                                               Material.LEATHER_LEGGINGS, Material.CHAINMAIL_LEGGINGS, Material.IRON_LEGGINGS, Material.GOLDEN_LEGGINGS, Material.DIAMOND_LEGGINGS, Material.NETHERITE_LEGGINGS,
                                               Material.LEATHER_BOOTS, Material.CHAINMAIL_BOOTS, Material.IRON_BOOTS, Material.GOLDEN_BOOTS, Material.DIAMOND_BOOTS, Material.NETHERITE_BOOTS);
     private static final List<Material> ELYTRA = Collections.singletonList(Material.ELYTRA);
+    private static final List<Material> FISHINGROD = Collections.singletonList(Material.FISHING_ROD);
     private static final List<Material> HOES = Arrays.asList(Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE);
     private static final List<Material> EVERYTHING = null;  // check for null
 
@@ -60,7 +61,9 @@ public class CustomEnchants {
     public static final Enchantment POTLUCK = new EnchantmentWrapper("potluck", "Potluck", 1, SWORDS, COMMON);
     public static final Enchantment BOMBER = new EnchantmentWrapper("bomber", "Bomber", 1, BOW, COMMON);
     public static final Enchantment DRAGONSBREATH = new EnchantmentWrapper("dragonsbreath", "Dragon's Breath", 1, BOW, RARE);
-
+    public static final Enchantment WITHERSSKULL = new EnchantmentWrapper("withersskull", "Wither's Skull", 1, BOW, RARE);
+    public static final Enchantment GRAPPLINGHOOK = new EnchantmentWrapper("grapplinghook", "Grappling Hook", 3, FISHINGROD, RARE);
+    public static final Enchantment AXETHROW = new EnchantmentWrapper("axethrow", "Axe Throw", 3, AXES, RARE);
 
     // map of namespaces and enchants
     private static final HashMap<String, Enchantment> ENCHANT_KEYS = new HashMap<String, Enchantment>();
@@ -71,7 +74,7 @@ public class CustomEnchants {
         // register each enchant in this array
         for (Enchantment enchant: new Enchantment[]{BLADEBEAM, SWORDSDANCE, SPINATTACK, URBOSASFURY, EXCALIBUR, DASH,
                 DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, DRAGONDANCE, WINGARDIUMLEVIOSA, SHEERCOLD, HASTYMINER,
-                BELLYDRUM, CUTCLEAN, POTLUCK, BOMBER, DRAGONSBREATH}) {
+                BELLYDRUM, CUTCLEAN, POTLUCK, BOMBER, DRAGONSBREATH, WITHERSSKULL, GRAPPLINGHOOK, AXETHROW}) {
             boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchant);
             if (!registered) registerEnchantment(enchant);
         }
