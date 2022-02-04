@@ -2,7 +2,6 @@ package me.jameslloyd.sleepyenchants.events;
 
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.enchants.EnchantmentWrapper;
-import me.jameslloyd.sleepyenchants.utils.ApplyEnchant;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,7 +59,7 @@ public class PrepareAnvil implements Listener {
 
         // apply each enchant
         for (Enchantment enchant : enchantsToApply.keySet()) {
-            ApplyEnchant.applyEnchant(result, (EnchantmentWrapper) enchant, enchantsToApply.get(enchant));
+            CustomEnchants.applyEnchant(result, (EnchantmentWrapper) enchant, enchantsToApply.get(enchant));
         }
 
         e.setResult(result);

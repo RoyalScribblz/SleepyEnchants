@@ -2,7 +2,6 @@ package me.jameslloyd.sleepyenchants.commands;
 
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.enchants.EnchantmentWrapper;
-import me.jameslloyd.sleepyenchants.utils.ApplyEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,7 +31,7 @@ public class CustomEnchant implements CommandExecutor {
         Enchantment enchant = CustomEnchants.getEnchant(enchantName);
         if (enchant == null) return false;
         //TODO Prevent duplicates of the same enchantment
-        boolean success = ApplyEnchant.applyEnchant(item, (EnchantmentWrapper) enchant, level);
+        boolean success = CustomEnchants.applyEnchant(item, (EnchantmentWrapper) enchant, level);
 
         if (success) {
             sendMsg(player, "&aSuccessfully applied " + enchant.getName() + "!");
