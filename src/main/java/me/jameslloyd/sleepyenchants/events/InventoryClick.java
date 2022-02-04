@@ -90,7 +90,7 @@ public class InventoryClick implements Listener {
     }
 
     public static void openEnchantMenu(Player player) {
-        enchantMenu = Bukkit.createInventory(null, 45);
+        enchantMenu = Bukkit.createInventory(null, 45, colourise("&8Custom Enchants"));
 
         // border
         ItemStack border = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
