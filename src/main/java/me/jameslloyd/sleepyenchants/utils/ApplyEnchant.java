@@ -86,7 +86,7 @@ public class ApplyEnchant {
 
         // special cases
         if (enchant == CustomEnchants.SWIFTBLADE) {
-            double additionalSpeed = item.getEnchantmentLevel(CustomEnchants.SWORDSDANCE) * 0.5;
+            double additionalSpeed = item.getEnchantmentLevel(CustomEnchants.SWIFTBLADE) * 0.5;
             meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
                     new AttributeModifier(UUID.randomUUID(), "attackSpeed", additionalSpeed, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
             item.setItemMeta(meta);

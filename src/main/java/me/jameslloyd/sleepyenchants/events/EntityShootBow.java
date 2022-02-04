@@ -105,7 +105,7 @@ public class EntityShootBow implements Listener {
                         for(int z = -RADIUS; z <= RADIUS; z++) {
                             Block b = block.getRelative(x, 0, z);
                             if(block.getLocation().distance(b.getLocation()) <= RADIUS) {
-                                if (b.getType() == Material.WATER) {  // only add water blocks
+                                if (b.getType() == Material.WATER && b.getData() == 0) {  // only add water blocks
                                     blocksInRadius.add(b);
                                 }
                             }
@@ -137,7 +137,7 @@ public class EntityShootBow implements Listener {
                         for(int z = -RADIUS; z <= RADIUS; z++) {
                             Block b = block.getRelative(x, 0, z);
                             if(block.getLocation().distance(b.getLocation()) <= RADIUS) {
-                                if (b.getType() == Material.LAVA) {  // only add water blocks
+                                if (b.getType() == Material.LAVA && b.getData() == 0) {  // only add water blocks
                                     blocksInRadius.add(b);
                                 }
                             }

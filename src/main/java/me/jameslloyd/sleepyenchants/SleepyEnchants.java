@@ -3,6 +3,7 @@ package me.jameslloyd.sleepyenchants;
 import me.jameslloyd.sleepyenchants.commands.*;
 import me.jameslloyd.sleepyenchants.enchants.CustomEnchants;
 import me.jameslloyd.sleepyenchants.events.*;
+import me.jameslloyd.sleepyenchants.utils.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -20,6 +21,7 @@ public final class SleepyEnchants extends JavaPlugin {
     @Override
     public void onEnable() {
         CustomEnchants.register();
+        ItemManager.init();
         getCommand("ge").setExecutor(new GiveEnchanted());
         getCommand("ce").setExecutor(new CustomEnchant());
         getCommand("ce").setTabCompleter(new CustomEnchantTabComplete());

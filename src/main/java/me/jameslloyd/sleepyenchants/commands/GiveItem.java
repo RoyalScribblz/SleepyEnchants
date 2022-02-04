@@ -1,5 +1,6 @@
 package me.jameslloyd.sleepyenchants.commands;
 
+import me.jameslloyd.sleepyenchants.utils.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -25,41 +26,13 @@ public class GiveItem implements CommandExecutor {
         String itemName = args[0];
 
         if (itemName.equalsIgnoreCase("hotpickaxe")) {
-            player.getInventory().addItem(hotPickaxe());
+            player.getInventory().addItem(ItemManager.hotPickaxe);
             sender.sendMessage("Giving you a hot pickaxe!");
         }
         if (itemName.equalsIgnoreCase("dagger")) {
-            player.getInventory().addItem(dagger());
+            player.getInventory().addItem(ItemManager.dagger);
             sender.sendMessage("Giving you a dagger!");
         }
         return true;
-    }
-
-    private static ItemStack hotPickaxe(){
-        ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(1);
-        meta.setDisplayName("Hot Pickaxe");
-        meta.addEnchant(Enchantment.DIG_SPEED, 1000, true);
-        meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 3, true);
-        meta.addEnchant(Enchantment.DURABILITY, 1000, true);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    private static ItemStack dagger(){
-        ItemStack item = new ItemStack(Material.IRON_SWORD, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(1);
-        meta.setDisplayName("Dagger");
-        AttributeModifier modifierDamage = new AttributeModifier(UUID.randomUUID(),
-                "generic.attackDamage", 4, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
-        AttributeModifier modifierSpeed = new AttributeModifier(UUID.randomUUID(),
-                "generic.attackSpeed", 2.6, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, modifierDamage);
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, modifierSpeed);
-        item.setItemMeta(meta);
-
-        return item;
     }
 }
