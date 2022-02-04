@@ -71,7 +71,7 @@ public class CustomEnchants {
 
     // each rarity
     private static final List<Enchantment> COMMON_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(WINGARDIUMLEVIOSA, CUTCLEAN, POTLUCK, BOMBER));
-    private static final List<Enchantment> RARE_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, HASTYMINER, DRAGONSBREATH, WITHERSSKULL, GRAPPLINGHOOK));
+    private static final List<Enchantment> RARE_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(DEVILSSCYTHE, SWIFTBLADE, ICEASPECT, BOMBERACE, HASTYMINER, DRAGONSBREATH, WITHERSSKULL, GRAPPLINGHOOK, AXETHROW));
     private static final List<Enchantment> EXOTIC_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(SWORDSDANCE, SPINATTACK, DASH, DRAGONDANCE, SHEERCOLD, BELLYDRUM));
     private static final List<Enchantment> HEROIC_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList());
     private static final List<Enchantment> LEGENDARY_ENCHANTS = new ArrayList<Enchantment>(Arrays.asList(BLADEBEAM, URBOSASFURY, EXCALIBUR));
